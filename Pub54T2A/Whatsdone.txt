@@ -1,0 +1,25 @@
+AOS off
+Dicerolls
+Most classic weapons converted
+Young system turned off
+vendors vulnerable
+armor roll fixed (no more 1 damage hits)
+
+ASCIITEXT
+WEAPONDURABILITY
+BETTERDAMAGELEVELS Vanq>Oblit>Doom> 
+Other affixesOTHERAFFIC
+NEW MOBS
+NEW MAP?
+FIX ARMORS AC VALUES
+START LOCATIONS
+FELUCCA RULES/no 2x loot
+SPELLDAMAGE/Timers
+INSTAHIT
+
+
+
+
+
+
+
