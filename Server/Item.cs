@@ -3579,7 +3579,7 @@ namespace Server
 
         public virtual void UpdateTotals()
         { }
-/*
+
         public virtual int LabelNumber
         {
             get
@@ -3594,7 +3594,7 @@ namespace Server
                 }
             }
         }
-*/
+/*
         public virtual int LabelNumber
         {
             get
@@ -3602,7 +3602,7 @@ namespace Server
                 return 1020000 + (m_ItemID & 0x3FFF);
             }
         }
-
+ */
         [CommandProperty(AccessLevel.GameMaster)]
         public int TotalGold { get { return GetTotal(TotalType.Gold); } }
 
@@ -5590,7 +5590,7 @@ namespace Server
                 from.Send(new MessageLocalized(m_Serial, m_ItemID, MessageType.Label, 0x3B2, 3, opl.Header, Name, opl.HeaderArgs));
             }
         }
-        #region ascii single click ovveride
+        #region ascii single click override
         private static Regex m_PluralRegEx = new Regex(@"([^%]+)%([^%/ ]+)(/([^% ]+))*%*([^%]*)", RegexOptions.Compiled | RegexOptions.Singleline);
 
         private Packet m_SingleClick = null;
