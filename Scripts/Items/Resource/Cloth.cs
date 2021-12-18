@@ -70,27 +70,16 @@ namespace Server.Items
             int version = reader.ReadInt();
         }
 
-        public override void AppendClickName(System.Text.StringBuilder sb)
+        public override void AppendClickName(System.Text.StringBuilder sb, bool plural)
         {
-            if (Name == null || Name.Length <= 0)
-            {
+            if(this.Amount > 1)
+            sb.Append("yards of cut cloth");
 
-                if (this.Amount > 1)
-                {
-                    sb.Append("a pile of folded cloth ({0} yards)", this.Amount);
-                    // sb.Append("{0} yards:", this.Amount * 50);
-                }
-                if (this.Amount == 1)
-                {
-                    sb.Append("a pile of folded cloth (1 yard)");
-                }
-            }
-            else
-            {
-                sb.Append(Name);
-            }
+            else sb.Append("cut cloth");
         }
-            public bool Scissor(Mobile from, Scissors scissors)
+
+
+        public bool Scissor(Mobile from, Scissors scissors)
         {
             if (this.Deleted || !from.CanSee(this))
                 return false;

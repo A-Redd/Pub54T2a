@@ -74,27 +74,17 @@ namespace Server.Items
             return true;
         }
 
-        public override void AppendClickName(System.Text.StringBuilder sb)
+        public override void AppendClickName(System.Text.StringBuilder sb, bool plural)
         {
             if (Name == null || Name.Length <= 0)
             {
+                base.AppendClickName(sb, plural);
+                sb.Append(" (");
+                sb.Append(this.Amount * 50);
+                sb.Append(" yards)");
 
-                if (this.Amount > 1)
-                {
-                    sb.Append("{0} bolts of cloth ", this.Amount);
-                    sb.Append("({0} yards)", this.Amount * 50);
-                }
-                if (this.Amount == 1)
-                {
-                    sb.Append("a bolt of cloth ");
-                    sb.Append("({0} yards)", this.Amount *50);
-                }
+
             }
-            else
-            {
-                sb.Append(Name);
-            }
-                
         }
     }
 }
