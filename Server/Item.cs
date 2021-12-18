@@ -4337,6 +4337,16 @@ namespace Server
             }
         }
 
+        public void AsciiLabelTo(Mobile to, string label)
+        {
+            to.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0x3B2, 3, "", label));
+        }
+
+        public void AsciiLabelTo(Mobile to, string label, params object[] args)
+        {
+            to.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0x3B2, 3, "", String.Format(label, args)));
+        }
+
         public void PublicOverheadMessage(MessageType type, int hue, int number)
         {
             PublicOverheadMessage(type, hue, number, "");

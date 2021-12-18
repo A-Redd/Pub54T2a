@@ -78,11 +78,17 @@ namespace Server.Items
         {
             if (Name == null || Name.Length <= 0)
             {
-                
+
                 if (this.Amount > 1)
-                    sb.Append("{0} bolts of cloth: {1} yards", this.Amount, this.Amount * 50);
+                {
+                    sb.Append("{0} bolts of cloth ", this.Amount);
+                    sb.Append("({0} yards)", this.Amount * 50);
+                }
                 if (this.Amount == 1)
-                    sb.Append("a bolt of cloth");
+                {
+                    sb.Append("a bolt of cloth ");
+                    sb.Append("({0} yards)", this.Amount *50);
+                }
             }
             else
             {

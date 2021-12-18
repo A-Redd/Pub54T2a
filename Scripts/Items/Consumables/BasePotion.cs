@@ -69,13 +69,34 @@ namespace Server.Items
                 return (Core.ML);
             }
         }
-
-        public override int LabelNumber
+  /*      
+                public override int LabelNumber
+                {
+                    get
+                    {
+                        return 1041314 + (int)this.m_PotionEffect;
+                    }
+                }
+        */
+        public override void AppendClickName(System.Text.StringBuilder sb, bool plural)
         {
-            get
-            {
-                return 1041314 + (int)this.m_PotionEffect;
-            }
+            if (this.m_PotionEffect == PotionEffect.CureLesser)
+                sb.Append("lesser cure potion");
+
+            if (this.m_PotionEffect == PotionEffect.Cure)
+                sb.Append("cure potion");
+
+            if (this.m_PotionEffect == PotionEffect.CureGreater)
+                sb.Append("greater cure potion");
+
+            if (this.m_PotionEffect == PotionEffect.Agility)
+                sb.Append("agility potion");
+
+            if (this.m_PotionEffect == PotionEffect.AgilityGreater)
+                sb.Append("greater agility potion");
+
+            if (this.Amount > 1)
+                sb.Append("s");
         }
 
         public BasePotion(int itemID, PotionEffect effect)
@@ -186,7 +207,7 @@ namespace Server.Items
                         break;
                     }
             }
-
+            
             if (version == 0)
                 this.Stackable = Core.ML;
         }
