@@ -27,6 +27,11 @@ namespace Server.Items
                 return Mining.System;
             }
         }
+		
+		public override int NumDice { get { return 4; } }
+        public override int DiceSides { get { return 4; } }
+        public override int Offset { get { return 0; } }
+		
         public override WeaponAbility PrimaryAbility
         {
             get

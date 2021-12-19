@@ -95,7 +95,7 @@ namespace Server.Items
         {
             get
             {
-                return 35;
+                return 36;
             }
         }
         public override int InitMinHits

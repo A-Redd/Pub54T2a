@@ -20,7 +20,7 @@ namespace Server.Items
         }
 
         public override int NumDice { get { return 2; } }
-        public override int DiceSides { get { return 10; } }
+        public override int DiceSides { get { return 9; } }
         public override int Offset { get { return 3; } }
 
         public override WeaponAbility PrimaryAbility

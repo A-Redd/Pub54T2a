@@ -20,7 +20,7 @@ namespace Server.Items
 
         public override int NumDice { get { return 5; } }
         public override int DiceSides { get { return 7; } }
-        public override int Offset { get { return 30; } }
+        public override int Offset { get { return 28; } }
 
         public override int EffectID
         {

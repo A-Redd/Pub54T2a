@@ -18,9 +18,9 @@ namespace Server.Items
         {
         }
 
-        public override int NumDice { get { return 2; } }
-        public override int DiceSides { get { return 15; } }
-        public override int Offset { get { return 5; } }
+        public override int NumDice { get { return 4; } }
+        public override int DiceSides { get { return 10; } }
+        public override int Offset { get { return 14; } }
 
         public override int EffectID
         {

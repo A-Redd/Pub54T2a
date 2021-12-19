@@ -19,9 +19,9 @@ namespace Server.Items
         {
         }
 
-        public override int NumDice { get { return 1; } }
-        public override int DiceSides { get { return 28; } }
-        public override int Offset { get { return 1; } }
+        public override int NumDice { get { return 5; } }
+        public override int DiceSides { get { return 3; } }
+        public override int Offset { get { return 3; } }
 
         public override WeaponAbility PrimaryAbility
         {
@@ -62,7 +62,7 @@ namespace Server.Items
         {
             get
             {
-                return 43;
+                return 45;
             }
         }
         public override float MlSpeed
