@@ -1347,26 +1347,25 @@ namespace Server.Items
 
         public virtual TimeSpan GetDelay(Mobile m)
         {
-            double speed = Speed;
+            double speed = this.Speed;
+
+            if (speed <= 0)
+                return TimeSpan.FromSeconds(10);
+
             double delayInSeconds;
 
-            double v = Convert.ToDouble (m.StamMax / m.Stam / 4);
+            delayInSeconds = 15000.0 / ((double)((m.Dex + 100) * speed));
 
-            if (v > 1.25)
-            {
-                v = 1.25;
-            }
-            delayInSeconds = 80.0 / (Speed * 1.25) + v; //divines 2.0 swing speed 
+            if (delayInSeconds < 0.5)
+                delayInSeconds = 0.5;
 
-            if (delayInSeconds < 1.25)
-            {
-                delayInSeconds = 1.25;
-            }
-                                                        
+            else if (delayInSeconds > 7)
+                delayInSeconds = 7;
+
             return TimeSpan.FromSeconds(delayInSeconds);
         }
 
-		public virtual void OnBeforeSwing(Mobile attacker, Mobile defender)
+        public virtual void OnBeforeSwing(Mobile attacker, Mobile defender)
 		{
 			WeaponAbility a = WeaponAbility.GetCurrentAbility(attacker);
 

@@ -147,9 +147,7 @@ namespace Server.Items
         }
 
         public override void OnSingleClick(Mobile from)
-        {
-            this.DisplayDurabilityTo(from);
-
+        {        
             base.OnSingleClick(from);
         }
 
