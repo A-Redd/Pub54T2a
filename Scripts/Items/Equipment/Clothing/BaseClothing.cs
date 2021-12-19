@@ -1311,7 +1311,7 @@ namespace Server.Items
                     list.Add(1152281 + ((int)m_ItemPower - 9));
             }
         }
-
+/*
         public override void OnSingleClick(Mobile from)
         {
             List<EquipInfoAttribute> attrs = new List<EquipInfoAttribute>();
@@ -1337,7 +1337,7 @@ namespace Server.Items
 
             from.Send(new DisplayEquipmentInfo(this, eqInfo));
         }
-
+*/
         public virtual void AddEquipInfoAttributes(Mobile from, List<EquipInfoAttribute> attrs)
         {
             if (this.DisplayLootType)
@@ -1801,6 +1801,37 @@ namespace Server.Items
             this.Hue = sender.DyedHue;
 
             return true;
+        }
+
+        public override string BuildSingleClick()
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+            if (AppendLootType(sb))
+                sb.Append(", ");
+
+            if (m_Quality == ClothingQuality.Exceptional)
+                sb.Append("exceptional, ");
+
+           // if (IsMagic && !Identified)
+                //sb.Append("magic, ");
+
+            if (sb.Length > 2)
+            {
+                sb.Remove(sb.Length - 2, 2);
+                sb.Append(' ');
+            }
+
+            AppendClickName(sb);
+            InsertNamePrefix(sb);
+
+           // if (IsMagic && Identified)
+              //  sb.AppendFormat(" of {0} with {1} charge{2}", SpellCastEffect.GetName(m_Effect), m_EffectCharges, m_EffectCharges != 1 ? "s" : "");
+
+            if (m_Crafter != null && !m_Crafter.Deleted)
+                sb.AppendFormat(" (crafted by {0})", m_Crafter.Name);
+
+            return sb.ToString();
         }
 
         public virtual bool Scissor(Mobile from, Scissors scissors)

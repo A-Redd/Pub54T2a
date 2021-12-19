@@ -100,6 +100,20 @@ namespace Server.Spells
             return (Core.AOS ? AosDamageDelay : OldDamageDelay);
         }
 
+        public static bool HasStatEffect(Mobile target, StatType type)
+        {
+            if (type == StatType.All)
+            {
+                return HasStatEffect(target, StatType.Dex) && HasStatEffect(target, StatType.Int) && HasStatEffect(target, StatType.Str);
+            }
+            else
+            {
+                StatMod mod = target.GetStatMod(String.Format("[Magic] {0} Offset", type));
+
+                return mod != null;
+            }
+        }
+
         public static bool CheckMulti(Point3D p, Map map)
         {
             return CheckMulti(p, map, true, 0);

@@ -2864,7 +2864,7 @@ namespace Server.Items
                     list.Add(1152281 + ((int)m_ItemPower - 9));
             }
         }
-
+        /*
         public override void OnSingleClick(Mobile from)
         {
             List<EquipInfoAttribute> attrs = new List<EquipInfoAttribute>();
@@ -2914,6 +2914,58 @@ namespace Server.Items
             EquipmentInfo eqInfo = new EquipmentInfo(number, this.m_Crafter, false, attrs.ToArray());
 
             from.Send(new DisplayEquipmentInfo(this, eqInfo));
+        }
+*/
+        [CommandProperty(AccessLevel.Counselor)]
+        public bool IsMagic
+        {
+            get
+            {
+                return m_Durability != ArmorDurabilityLevel.Regular || m_Protection != ArmorProtectionLevel.Regular;
+            }
+        }
+
+        public override string BuildSingleClick()
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+            if (AppendLootType(sb))
+                sb.Append(", ");
+
+            if (m_Quality == ArmorQuality.Exceptional)
+                sb.Append("exceptional, ");
+            //if (m_Quality == ArmorQuality.Masterwork)
+               // sb.Append("masterwork, ");
+
+            if (Identified)
+            {
+                if (m_Durability != ArmorDurabilityLevel.Regular)
+                    sb.AppendFormat("{0}, ", m_Durability.ToString().ToLower());
+            }
+            else if (IsMagic)
+            {
+                sb.Append("magic, ");
+            }
+
+            if (sb.Length > 2)
+                sb.Remove(sb.Length - 2, 1); // remove the last comma
+
+            AppendClickName(sb);
+            InsertNamePrefix(sb);
+
+            if (Identified)
+            {
+                if (m_Protection != ArmorProtectionLevel.Regular)
+                    sb.AppendFormat(" of {0}", m_Protection.ToString().ToLower());
+            }
+
+            if (m_Crafter != null)
+                sb.AppendFormat(" (crafted by {0})", m_Crafter.Name);
+
+           // if (m_HitPoints < 15 || ((float)m_HitPoints / m_MaxHitPoints) <= 0.1)
+               // sb.Append(" (damaged)");
+
+            return sb.ToString();
         }
 
         #region ICraftable Members

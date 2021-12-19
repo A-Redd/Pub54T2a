@@ -13,6 +13,10 @@ namespace Server.Items
             this.Hue = 837;
         }
 
+		public override int NumDice { get { return 7; } }
+        public override int DiceSides { get { return 7; } }
+        public override int Offset { get { return 1; } }
+		
         public TribalSpear(Serial serial)
             : base(serial)
         {
