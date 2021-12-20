@@ -69,15 +69,15 @@ namespace Server.Items
                 return (Core.ML);
             }
         }
-  /*      
+        /*
                 public override int LabelNumber
                 {
                     get
                     {
-                        return 1041314 + (int)this.m_PotionEffect;
+                return 1041314 + (int)this.m_PotionEffect.;
                     }
                 }
-        */
+*/
         public override void AppendClickName(System.Text.StringBuilder sb, bool plural)
         {
             if (this.m_PotionEffect == PotionEffect.CureLesser)
@@ -94,6 +94,52 @@ namespace Server.Items
 
             if (this.m_PotionEffect == PotionEffect.AgilityGreater)
                 sb.Append("greater agility potion");
+
+            if (this.m_PotionEffect == PotionEffect.Strength)
+                sb.Append("strength potion");
+
+            if (this.m_PotionEffect == PotionEffect.StrengthGreater)
+                sb.Append("greater strength potion");
+            
+            if (this.m_PotionEffect == PotionEffect.PoisonLesser)
+                sb.Append("lesser poison potion");
+
+            if (this.m_PotionEffect == PotionEffect.Poison)
+                sb.Append("poison potion");
+
+            if (this.m_PotionEffect == PotionEffect.PoisonGreater)
+                sb.Append("greater poison potion");
+
+            if (this.m_PotionEffect == PotionEffect.PoisonDeadly)
+                sb.Append("deadly poison potion");
+
+            if (this.m_PotionEffect == PotionEffect.Refresh)
+                sb.Append("refresh potion");
+
+            if (this.m_PotionEffect == PotionEffect.RefreshTotal)
+                sb.Append("total refresh poison potion");
+
+            if (this.m_PotionEffect == PotionEffect.HealLesser)
+                sb.Append("lesser heal potion");
+
+            if (this.m_PotionEffect == PotionEffect.Heal)
+                sb.Append("heal potion");
+
+            if (this.m_PotionEffect == PotionEffect.HealGreater)
+                sb.Append("greater heal potion");
+
+            if (this.m_PotionEffect == PotionEffect.ExplosionLesser)
+                sb.Append("lesser explosion potion");
+
+            if (this.m_PotionEffect == PotionEffect.Explosion)
+                sb.Append("explosion potion");
+
+            if (this.m_PotionEffect == PotionEffect.ExplosionGreater)
+                sb.Append("greater explosion potion");
+
+            if (this.m_PotionEffect == PotionEffect.Nightsight)
+                sb.Append("nightsight potion");
+
 
             if (this.Amount > 1)
                 sb.Append("s");
@@ -174,12 +220,12 @@ namespace Server.Items
                 }
                 else
                 {
-                    from.SendLocalizedMessage(502172); // You must have a free hand to drink a potion.
+                    from.SendAsciiMessage("You must have a free hand to drink a potion."); // You must have a free hand to drink a potion.
                 }
             }
             else
             {
-                from.SendLocalizedMessage(502138); // That is too far away for you to use
+                from.SendAsciiMessage("That is too far away for you to use") ; // That is too far away for you to use
             }
         }
 

@@ -76,14 +76,14 @@ namespace Server.Items
 
             if (cure && from.CurePoison(from))
             {
-                from.SendLocalizedMessage(500231); // You feel cured of poison!
+                from.SendAsciiMessage("You feel cured of poison!"); // You feel cured of poison!
 
                 from.FixedEffect(0x373A, 10, 15);
                 from.PlaySound(0x1E0);
             }
             else if (!cure)
             {
-                from.SendLocalizedMessage(500232); // That potion was not strong enough to cure your ailment!
+                from.SendAsciiMessage("That potion was not strong enough to cure your ailment!"); // That potion was not strong enough to cure your ailment!
             }
         }
 
@@ -107,7 +107,7 @@ namespace Server.Items
             }
             else
             {
-                from.SendLocalizedMessage(1042000); // You are not poisoned.
+                from.SendAsciiMessage("You are not poisoned."); // You are not poisoned.
             }
         }
     }

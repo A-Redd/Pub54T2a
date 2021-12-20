@@ -40,7 +40,7 @@ namespace Server.Items
                 return true;
             }
 
-            from.SendLocalizedMessage(502173); // You are already under a similar effect.
+            from.SendAsciiMessage("You are already under a similar effect.");
             return false;
         }
 

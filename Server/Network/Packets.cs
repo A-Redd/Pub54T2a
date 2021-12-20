@@ -2569,42 +2569,27 @@ m_Stream.Write( (int) renderMode );
 			return p;
 		}
 
-		public MessageLocalized(
-			Serial serial, int graphic, MessageType type, int hue, int font, int number, string name, string args)
-			: base(0x1C) //(0xC1) AsciiFont
-		{
-			if (name == null)
-			{
-				name = "";
-			}
-			if (args == null)
-			{
-				args = "";
-			}
+        public MessageLocalized(Serial serial, int graphic, MessageType type, int hue, int font, int number, string name, string args) : base(0x1C)
+        {
+            if (name == null) name = "";
+            if (args == null) args = "";
 
-			if (hue == 0)
-			{
-				hue = 0x3B2;
-			}
+            if (hue == 0)
+                hue = 0x3B2;
 
-            string text = Core.CliLoc.SplitFormat(number, args);// AsciiFont
-
-            //EnsureCapacity(50 + (args.Length * 2));
-            EnsureCapacity(45 + text.Length);
-
-            m_Stream.Write(serial);
-			m_Stream.Write((short)graphic);
-			m_Stream.Write((byte)type);
-			m_Stream.Write((short)hue);
-			m_Stream.Write((short)font);
-			m_Stream.Write(number);
-			m_Stream.WriteAsciiFixed(name, 30);
+            string text = Core.CliLoc.SplitFormat(number, args);
+            this.EnsureCapacity(45 + text.Length);
+            m_Stream.Write((int)serial);
+            m_Stream.Write((short)graphic);
+            m_Stream.Write((byte)type);
+            m_Stream.Write((short)hue);
+            m_Stream.Write((short)font);
+            m_Stream.WriteAsciiFixed(name, 30);
             m_Stream.WriteAsciiNull(text);
-            //m_Stream.WriteLittleUniNull(args);
-		}
-	}
+        }
+    }
 
-	public sealed class MobileMoving : Packet
+    public sealed class MobileMoving : Packet
 	{
 		public MobileMoving(Mobile m, int noto)
 			: base(0x77, 17)
@@ -4273,41 +4258,31 @@ m_Stream.Write( (int) renderMode );
 		}
 	}
 
-	public sealed class UnicodeMessage : Packet
-	{
-		public UnicodeMessage(
-			Serial serial, int graphic, MessageType type, int hue, int font, string lang, string name, string text)
-			: base(0x1C) //()0xAE AsciiFont
-		{
-			if (name == null)
-			{
-				name = "";
-			}
-			if (text == null)
-			{
-				text = "";
-			}
+    public sealed class UnicodeMessage : Packet
+    {
+        public UnicodeMessage(Serial serial, int graphic, MessageType type, int hue, int font, string lang, string name, string text) : base(0x1C)
+        {
+            if (string.IsNullOrEmpty(lang)) lang = "ENU";
+            if (name == null) name = "";
+            if (text == null) text = "";
 
-			if (hue == 0)
-			{
-				hue = 0x3B2;
-			}
+            if (hue == 0)
+                hue = 0x3B2;
 
-            //EnsureCapacity(50 + (text.Length * 2));
-            this.EnsureCapacity(45 + text.Length); //AsciiFont
+            this.EnsureCapacity(45 + text.Length);
 
-            m_Stream.Write(serial);
-			m_Stream.Write((short)graphic);
-			m_Stream.Write((byte)type);
-			m_Stream.Write((short)hue);
-			m_Stream.Write((short)font);
-			//m_Stream.WriteAsciiFixed(lang, 4);
-			m_Stream.WriteAsciiFixed(name, 30); //AsciiFont
-            m_Stream.WriteAsciiNull(text); //m_Stream.WriteBigUniNull(text);
-		}
-	}
+            m_Stream.Write((int)serial);
+            m_Stream.Write((short)graphic);
+            m_Stream.Write((byte)type);
+            m_Stream.Write((short)hue);
+            m_Stream.Write((short)font);
+            m_Stream.WriteAsciiFixed(lang, 4);
+            m_Stream.WriteAsciiFixed(name, 30);
+            m_Stream.WriteBigUniNull(text);
+        }
+    }
 
-	public sealed class PingAck : Packet
+    public sealed class PingAck : Packet
 	{
 		private static readonly PingAck[] m_Cache = new PingAck[0x100];
 
@@ -4805,63 +4780,35 @@ m_Stream.Write( (int) renderMode );
 		System = 0x02
 	}
 
-	public sealed class MessageLocalizedAffix : Packet
-	{
-		public MessageLocalizedAffix(
-			Serial serial,
-			int graphic,
-			MessageType messageType,
-			int hue,
-			int font,
-			int number,
-			string name,
-			AffixType affixType,
-			string affix,
-			string args)
-			: base(0x1C) //(0xCC) AsciiText
-		{
-			if (name == null)
-			{
-				name = "";
-			}
-			if (affix == null)
-			{
-				affix = "";
-			}
-			if (args == null)
-			{
-				args = "";
-			}
+    public sealed class MessageLocalizedAffix : Packet
+    {
+        public MessageLocalizedAffix(Serial serial, int graphic, MessageType messageType, int hue, int font, int number, string name, AffixType affixType, string affix, string args) : base(0x1C)
+        {
+            if (name == null) name = "";
+            if (affix == null) affix = "";
+            if (args == null) args = "";
 
-			if (hue == 0)
-			{
-				hue = 0x3B2;
-			}
+            if (hue == 0)
+                hue = 0x3B2;
 
-
-            string text = "";
+            string text;
             if ((affixType & AffixType.Prepend) != AffixType.Append)
                 text = string.Format("{0}{1}", affix, Core.CliLoc.SplitFormat(number, args));
             else
                 text = string.Format("{0}{1}", Core.CliLoc.SplitFormat(number, args), affix);
-
             this.EnsureCapacity(45 + text.Length);
-            //EnsureCapacity(52 + affix.Length + (args.Length * 2)); AsciiText
 
-			m_Stream.Write(serial);
-			m_Stream.Write((short)graphic);
-			m_Stream.Write((byte)messageType);
-			m_Stream.Write((short)hue);
-			m_Stream.Write((short)font);
-			//m_Stream.Write(number);
-			//m_Stream.Write((byte)affixType);
-			m_Stream.WriteAsciiFixed(name, 30);
-			m_Stream.WriteAsciiNull(affix);
-			//m_Stream.WriteBigUniNull(args);
-		}
-	}
+            m_Stream.Write((int)serial);
+            m_Stream.Write((short)graphic);
+            m_Stream.Write((byte)messageType);
+            m_Stream.Write((short)hue);
+            m_Stream.Write((short)font);
+            m_Stream.WriteAsciiFixed(name, 30);
+            m_Stream.WriteAsciiNull(text);
+        }
+    }
 
-	public sealed class ServerInfo
+    public sealed class ServerInfo
 	{
 		public string Name { get; set; }
 

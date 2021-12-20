@@ -182,21 +182,21 @@ namespace Server.Items
 
                     if (pack != null && pack.ConsumeTotal(typeof(Bottle), 1))
                     {
-                        from.SendLocalizedMessage(502242); // You pour some of the keg's contents into an empty bottle...
+                        from.SendAsciiMessage("You pour some of the keg's contents into an empty bottle..."); // You pour some of the keg's contents into an empty bottle...
 
                         BasePotion pot = this.FillBottle();
 
                         if (pack.TryDropItem(from, pot, false))
                         {
-                            from.SendLocalizedMessage(502243); // ...and place it into your backpack.
+                            from.SendAsciiMessage("...and place it into your backpack."); // ...and place it into your backpack.
                             from.PlaySound(0x240);
 
                             if (--this.Held == 0)
-                                from.SendLocalizedMessage(502245); // The keg is now empty.
+                                from.SendAsciiMessage("The keg is now empty."); // The keg is now empty.
                         }
                         else
                         {
-                            from.SendLocalizedMessage(502244); // ...but there is no room for the bottle in your backpack.
+                            from.SendAsciiMessage("...but there is no room for the bottle in your backpack."); // ...but there is no room for the bottle in your backpack.
                             pot.Delete();
                         }
                     }
@@ -207,7 +207,7 @@ namespace Server.Items
                 }
                 else
                 {
-                    from.SendLocalizedMessage(502246); // The keg is empty.
+                    from.SendAsciiMessage("The keg is empty."); // The keg is empty.
                 }
             }
             else
@@ -225,12 +225,12 @@ namespace Server.Items
 
                 if (pot.PotionEffect == PotionEffect.Darkglow || pot.PotionEffect == PotionEffect.Invisibility || pot.PotionEffect == PotionEffect.Parasitic)
                 {
-                    from.SendLocalizedMessage(502232); // The keg is not designed to hold that type of object.
+                    from.SendAsciiMessage("The keg is not designed to hold that type of object."); // The keg is not designed to hold that type of object.
                     return false;
                 }
                 else if (toHold <= 0)
                 {
-                    from.SendLocalizedMessage(502233); // The keg will not hold any more!
+                    from.SendAsciiMessage("The keg will not hold any more!"); // The keg will not hold any more!
                     return false;
                 }
                 else if (this.m_Held == 0)
@@ -242,7 +242,7 @@ namespace Server.Items
 
                         from.PlaySound(0x240);
 
-                        from.SendLocalizedMessage(502237); // You place the empty bottle in your backpack.
+                        from.SendAsciiMessage("You place the empty bottle in your backpack."); // You place the empty bottle in your backpack.
 
                         item.Consume(toHold);
 
@@ -253,13 +253,13 @@ namespace Server.Items
                     }
                     else
                     {
-                        from.SendLocalizedMessage(502238); // You don't have room for the empty bottle in your backpack.
+                        from.SendAsciiMessage("You don't have room for the empty bottle in your backpack."); // You don't have room for the empty bottle in your backpack.
                         return false;
                     }
                 }
                 else if (pot.PotionEffect != this.m_Type)
                 {
-                    from.SendLocalizedMessage(502236); // You decide that it would be a bad idea to mix different types of potions.
+                    from.SendAsciiMessage("You decide that it would be a bad idea to mix different types of potions."); // You decide that it would be a bad idea to mix different types of potions.
                     return false;
                 }
                 else
@@ -270,7 +270,7 @@ namespace Server.Items
 
                         from.PlaySound(0x240);
 
-                        from.SendLocalizedMessage(502237); // You place the empty bottle in your backpack.
+                        from.SendAsciiMessage("You place the empty bottle in your backpack."); // You place the empty bottle in your backpack.
 
                         item.Consume(toHold);
 
@@ -281,14 +281,14 @@ namespace Server.Items
                     }
                     else
                     {
-                        from.SendLocalizedMessage(502238); // You don't have room for the empty bottle in your backpack.
+                        from.SendAsciiMessage("You don't have room for the empty bottle in your backpack."); // You don't have room for the empty bottle in your backpack.
                         return false;
                     }
                 }
             }
             else
             {
-                from.SendLocalizedMessage(502232); // The keg is not designed to hold that type of object.
+                from.SendAsciiMessage("The keg is not designed to hold that type of object."); // The keg is not designed to hold that type of object.
                 return false;
             }
         }

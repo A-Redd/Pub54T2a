@@ -620,7 +620,7 @@ namespace Server
 #if Map_UseMaxRange || Map_AllUpdates
 			return GetObjectsInRange(p, Core.GlobalMaxUpdateRange);
 #else
-			return GetObjectsInRange(p, 18);
+			return GetObjectsInRange(p, 36);
 #endif
 		}
 
@@ -639,7 +639,7 @@ namespace Server
 #if Map_UseMaxRange || Map_AllUpdates
 			return GetClientsInRange(p, Core.GlobalMaxUpdateRange);
 #else
-			return GetClientsInRange(p, 18);
+			return GetClientsInRange(p, 36);
 #endif
 		}
 
@@ -658,7 +658,7 @@ namespace Server
 #if Map_UseMaxRange || Map_AllUpdates
 			return GetItemsInRange(p, Core.GlobalMaxUpdateRange);
 #else
-			return GetItemsInRange(p, 18);
+			return GetItemsInRange(p, 36);
 #endif
 		}
 
@@ -677,7 +677,7 @@ namespace Server
 #if Map_UseMaxRange || Map_AllUpdates
 			return GetMobilesInRange(p, Core.GlobalMaxUpdateRange);
 #else
-			return GetMobilesInRange(p, 18);
+			return GetMobilesInRange(p, 36);
 #endif
 		}
 

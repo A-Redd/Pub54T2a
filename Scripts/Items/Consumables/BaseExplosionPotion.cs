@@ -78,7 +78,7 @@ namespace Server.Items
 		{
 			if (Core.AOS && (from.Paralyzed || from.Frozen || (from.Spell != null && from.Spell.IsCasting)))
 			{
-				from.SendLocalizedMessage(1062725); // You can not use a purple potion while paralyzed.
+				from.SendAsciiMessage("You can not use a purple potion while paralyzed."); // You can not use a purple potion while paralyzed.
 				return;
 			}
 
@@ -106,7 +106,7 @@ namespace Server.Items
 
 			if (m_Timer == null)
 			{
-				from.SendLocalizedMessage(500236); // You should throw it now!
+				from.SendAsciiMessage("You should throw it now!"); // You should throw it now!
 
 				if (Core.ML)
 				{
