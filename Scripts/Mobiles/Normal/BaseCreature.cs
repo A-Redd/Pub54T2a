@@ -4112,8 +4112,8 @@ namespace Server.Mobiles
                 val = (val * 100) / 60;
             }
 
-            m_HitsMax = val;
-            Hits = HitsMax;
+            m_HitsMax = RawStr;
+            Hits = RawStr;
         }
 
         public void SetHits(int min, int max)
@@ -4124,7 +4124,7 @@ namespace Server.Mobiles
                 max = (max * 100) / 60;
             }
 
-            m_HitsMax = Utility.RandomMinMax(min, max);
+            m_HitsMax = Utility.RandomMinMax(RawStr, RawStr);
             Hits = HitsMax;
         }
 

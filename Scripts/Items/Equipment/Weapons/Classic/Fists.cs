@@ -28,8 +28,8 @@ namespace Server.Items
         }
 
         public override int NumDice { get { return 1; } }
-        public override int DiceSides { get { return 4; } }
-        public override int Offset { get { return 1; } }
+        public override int DiceSides { get { return 8; } }
+        public override int Offset { get { return 0; } }
 
         public override int AosStrengthReq
         {
