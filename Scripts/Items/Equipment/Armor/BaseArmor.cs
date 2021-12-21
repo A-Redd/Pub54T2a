@@ -388,6 +388,43 @@ namespace Server.Items
                 if (m_MaxHitPoints > 0)
                     ar *= (((double)m_HitPoints) * 1.05 / ((double)m_MaxHitPoints)) * 0.2 + 0.80;
 
+                switch (this.m_Resource)
+                {
+                    case CraftResource.DullCopper:
+                        ar += 1;
+                        break;
+                    case CraftResource.ShadowIron:
+                        ar += 2;
+                        break;
+                    case CraftResource.Copper:
+                        ar += 3;
+                        break;
+                    case CraftResource.Bronze:
+                        ar += 4;
+                        break;
+                    case CraftResource.Gold:
+                        ar += 5;
+                        break;
+                    case CraftResource.Agapite:
+                        ar += 6;
+                        break;
+                    case CraftResource.Verite:
+                        ar += 7;
+                        break;
+                    case CraftResource.Valorite:
+                        ar += 8;
+                        break;
+                    case CraftResource.SpinedLeather:
+                        ar += 2;
+                        break;
+                    case CraftResource.HornedLeather:
+                        ar += 4;
+                        break;
+                    case CraftResource.BarbedLeather:
+                        ar += 6;
+                        break;
+                }
+
                 return ar;
             }
         }
@@ -2449,50 +2486,17 @@ namespace Server.Items
 
             if (Utility.Random(5) == 0)
                 HitPoints--;
-            /*
-            if (25 > Utility.Random(100)) // 25% chance to lower durability
-                {
-                    int wear;
 
-                    if (weapon.Type == WeaponType.Bashing)
-                        wear = Absorbed / 2;
-                    else
-                        wear = Utility.Random(2);
-
-                    if (NegativeAttributes.Antique > 0)
-                        wear *= 2;
-
-                    if (wear > 0 && this.m_MaxHitPoints > 0)
-                    {
-                        if (this.m_HitPoints >= wear)
-                        {
-                            this.HitPoints -= wear;
-                            wear = 0;
-                        }
-                        else
-                        {
-                            wear -= this.HitPoints;
-                            this.HitPoints = 0;
-                        }
-
-                        if (wear > 0)
-                        {
-                            if (this.m_MaxHitPoints > wear)
-                            {
-                                this.MaxHitPoints -= wear;
-
-                                if (this.Parent is Mobile)
-                                    ((Mobile)this.Parent).LocalOverheadMessage(MessageType.Regular, 0x3B2, 1061121); // Your equipment is severely damaged.
-                            }
-                            else
-                            {
-                                this.Delete();
-                            }
-                        }
-                    }
-                }
+            if (this.m_HitPoints <= 10)
+            {
+                if (this.Parent is Mobile)
+                    ((Mobile)this.Parent).LocalOverheadMessage(MessageType.Regular, 0x3B2, 1061121); // Your equipment is severely damaged.
             }
-            */
+            else
+            {
+                this.Delete();
+            }
+      
             return damageTaken;
         }
 

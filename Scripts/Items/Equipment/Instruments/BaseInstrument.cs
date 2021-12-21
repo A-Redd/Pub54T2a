@@ -453,7 +453,7 @@ namespace Server.Items
             if (this.m_UsesRemaining != oldUses)
                 Timer.DelayCall(TimeSpan.Zero, new TimerCallback(InvalidateProperties));
         }
-
+        /*
         public override void OnSingleClick(Mobile from)
         {
             ArrayList attrs = new ArrayList();
@@ -506,7 +506,7 @@ namespace Server.Items
 
             from.Send(new DisplayEquipmentInfo(this, eqInfo));
         }
-
+        */
         public BaseInstrument(Serial serial)
             : base(serial)
         {
