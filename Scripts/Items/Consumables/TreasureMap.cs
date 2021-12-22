@@ -284,8 +284,10 @@ namespace Server.Items
         {
             m_Level = level;
 
-            if (level == 7 || map == Map.Internal)
-                map = GetRandomMap();
+            Map = Map.Felucca;
+
+           // if (level == 7 || map == Map.Internal)
+               // map = GetRandomMap();
 
             Facet = map;
 
@@ -835,24 +837,37 @@ namespace Server.Items
                 }
             }
         }
+        /*
+                public override void GetProperties(ObjectPropertyList list)
+                {
+                    base.GetProperties(list);
+
+                    if (Facet == Map.Felucca)
+                        list.Add(1041502);
+                    else if (Facet == Map.Trammel)
+                        list.Add(1041503);
+                    else if (Facet == Map.Ilshenar)
+                        list.Add(1060850);
+                    else if (Facet == Map.Tokuno)
+                        list.Add(1115645);
+                    else if (Facet == Map.Malas)
+                        list.Add(1060851);
+                    else if (Facet == Map.TerMur)
+                        list.Add(1115646);
+                    // for somewhere in Felucca : for somewhere in Trammel
+
+                    if (m_Completed)
+                    {
+                        list.Add(1041507, m_CompletedBy == null ? "someone" : m_CompletedBy.Name); // completed by ~1_val~
+                    }
+                }
+                */
 
         public override void GetProperties(ObjectPropertyList list)
         {
             base.GetProperties(list);
 
-            if (Facet == Map.Felucca)
-                list.Add(1041502);
-            else if (Facet == Map.Trammel)
-                list.Add(1041503);
-            else if (Facet == Map.Ilshenar)
-                list.Add(1060850);
-            else if (Facet == Map.Tokuno)
-                list.Add(1115645);
-            else if (Facet == Map.Malas)
-                list.Add(1060851);
-            else if (Facet == Map.TerMur)
-                list.Add(1115646);
-            // for somewhere in Felucca : for somewhere in Trammel
+            list.Add(Facet == Map.Felucca ? 1041502 : 1041503); // for somewhere in Felucca : for somewhere in Trammel
 
             if (m_Completed)
             {
@@ -860,6 +875,28 @@ namespace Server.Items
             }
         }
 
+        public override void OnSingleClick(Mobile from)
+        {
+            if (m_Completed)
+            {
+                LabelTo(from, "a treasure map completed by {0}", m_CompletedBy == null ? "someone" : m_CompletedBy.Name);
+            }
+            else if (m_Decoder != null)
+            {
+                if (m_Level == 6)
+                    LabelTo(from, 1063453);
+                else
+                    LabelTo(from, 1041516 + m_Level);
+            }
+            else
+            {
+                if (m_Level == 6)
+                    LabelTo(from, 1063452);
+                else
+                    LabelTo(from, 1041510 + m_Level);
+            }
+        }
+        /*
         public override void OnSingleClick(Mobile from)
         {
             if (m_Completed)
@@ -900,7 +937,7 @@ namespace Server.Items
                 }
             }
         }
-
+        */
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
@@ -1076,12 +1113,7 @@ namespace Server.Items
                 {
                     from.SendLocalizedMessage(503028); // The treasure for this map has already been found.
                 }
-                /*
-            else if ( from != m_Map.m_Decoder )
-            {
-            from.SendLocalizedMessage( 503016 ); // Only the person who decoded this map may actually dig up the treasure.
-            }
-            */
+
                 else if (m_Map.m_Decoder != from && !m_Map.HasRequiredSkill(from))
                 {
                     from.SendLocalizedMessage(503031); // You did not decode this map and have no clue where to look for the treasure.
