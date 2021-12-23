@@ -30,6 +30,7 @@ using Server.Spells.Sixth;
 using Server.Spells.Spellweaving;
 using Server.Targeting;
 using System.Linq;
+using Server.Engines.XmlSpawner2;
 #endregion
 
 namespace Server.Mobiles
@@ -430,7 +431,16 @@ namespace Server.Mobiles
 
         public virtual WeaponAbility GetWeaponAbility()
         {
-            return null;
+            // ARTEGORDONMOD
+            XmlWeaponAbility a = (XmlWeaponAbility)XmlAttach.FindAttachment(this, typeof(XmlWeaponAbility));
+            if (a != null)
+            {
+                return a.WeaponAbility;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         #region Elemental Resistance/Damage

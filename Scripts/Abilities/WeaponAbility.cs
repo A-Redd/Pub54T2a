@@ -82,7 +82,9 @@ namespace Server.Items
             else if (weapon != null && weapon.SecondaryAbility == this)
                 return 90.0;
 
-            return 200.0;
+                //return 0;
+
+            return 0;//200.0;
         }
 
         public virtual int CalculateMana(Mobile from)
@@ -284,7 +286,7 @@ namespace Server.Items
             return this.CheckSkills(from) && this.CheckMana(from, false);
         }
 
-        private static readonly WeaponAbility[] m_Abilities = new WeaponAbility[33]
+        private static readonly WeaponAbility[] m_Abilities = new WeaponAbility[34]
         {
             null,
             new ArmorIgnore(),
@@ -318,7 +320,9 @@ namespace Server.Items
             new ForceOfNature(),
             new InfusedThrow(),
             new MysticArc(),
-            new Disrobe()
+            new Disrobe(),
+            new Disease()
+
         };
 
         public static WeaponAbility[] Abilities
@@ -375,6 +379,7 @@ namespace Server.Items
         public static readonly WeaponAbility MysticArc = m_Abilities[31];
 
         public static readonly WeaponAbility Disrobe = m_Abilities[32];
+        public static readonly WeaponAbility Disease = m_Abilities[33];
 
         public static bool IsWeaponAbility(Mobile m, WeaponAbility a)
         {
@@ -399,11 +404,7 @@ namespace Server.Items
 
         public static WeaponAbility GetCurrentAbility(Mobile m)
         {
-            if (!Core.AOS)
-            {
-                ClearCurrentAbility(m);
-                return null;
-            }
+
 
             WeaponAbility a = (WeaponAbility)m_Table[m];
 
@@ -424,11 +425,7 @@ namespace Server.Items
 
         public static bool SetCurrentAbility(Mobile m, WeaponAbility a)
         {
-            if (!Core.AOS)
-            {
-                ClearCurrentAbility(m);
-                return false;
-            }
+
 
             if (!IsWeaponAbility(m, a))
             {
@@ -460,7 +457,7 @@ namespace Server.Items
         {
             m_Table.Remove(m);
 
-            if (Core.AOS && m.NetState != null)
+            if ( m.NetState != null)
                 m.Send(ClearWeaponAbility.Instance);
         }
 
