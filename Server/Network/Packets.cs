@@ -4276,9 +4276,10 @@ m_Stream.Write( (int) renderMode );
             m_Stream.Write((byte)type);
             m_Stream.Write((short)hue);
             m_Stream.Write((short)font);
-            m_Stream.WriteAsciiFixed(lang, 4);
+           // m_Stream.WriteAsciiFixed(lang, 4);
             m_Stream.WriteAsciiFixed(name, 30);
-            m_Stream.WriteBigUniNull(text);
+            m_Stream.WriteAsciiNull(text);
+            //m_Stream.WriteBigUniNull(text);
         }
     }
 

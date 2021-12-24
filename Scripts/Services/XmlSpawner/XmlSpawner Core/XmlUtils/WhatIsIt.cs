@@ -49,11 +49,11 @@ namespace Server.Commands
 					}
 				if (name != String.Empty && name != null)
 				{
-					from.SendMessage("That is {0} {1} named '{2}'", article, typename, name);
+					from.SendAsciiMessage("That is {0} {1} named '{2}'", article, typename, name);
 				}
 				else
 				{
-					from.SendMessage("That is {0} {1} with no name", article, typename);
+					from.SendAsciiMessage("That is {0} {1} with no name", article, typename);
 				}
 			}
 		}

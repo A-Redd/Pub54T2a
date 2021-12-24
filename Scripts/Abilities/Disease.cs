@@ -7,11 +7,6 @@ using Server.Spells.Necromancy;
 
 namespace Server.Items
 {
-    /// <summary>
-    /// Make your opponent bleed profusely with this wicked use of your weapon.
-    /// When successful, the target will bleed for several seconds, taking damage as time passes for up to ten seconds.
-    /// The rate of damage slows down as time passes, and the blood loss can be completely staunched with the use of bandages. 
-    /// </summary>
     public class Disease : WeaponAbility
     {
         private static readonly Hashtable m_Table = new Hashtable();
@@ -45,14 +40,13 @@ namespace Server.Items
             t.Start();
         }
 
-        public static void DoDisease(Mobile m, Mobile from, int level)
+        public static void DoDisease(Mobile m, Mobile from)
         {
+            int level = 0;
+            level = from.TithingPoints;
             if (m.Alive)
             {
-                int damage = Utility.RandomMinMax(level, level * 2);
-
-                if (!m.Player)
-                    damage *= 2;
+                int damage = Utility.RandomMinMax(level +1 , level +1 * 2);
 
                 m.PlaySound(0x133);
                 AOS.Damage(m, from, damage, false, 0, 0, 0, 0, 0, 0, 100, false, false, false);
@@ -78,7 +72,7 @@ namespace Server.Items
             m_Table.Remove(m);
 
             if (message)
-                m.SendAsciiMessage("The disease has run its course"); 
+                m.SendAsciiMessage("The disease ends"); 
         }
 		
 
@@ -89,26 +83,14 @@ namespace Server.Items
 
             ClearCurrentAbility(attacker);
 
-            // Who is immune?
-            /*
-            TransformContext context = TransformationSpellHelper.GetContext(defender);
-
-            if ((context != null && (context.Type == typeof(LichFormSpell) || context.Type == typeof(WraithFormSpell))) ||
-                (defender is BaseCreature && ((BaseCreature)defender).BleedImmune))
-            {
-                attacker.SendLocalizedMessage(1062052); // Your target is not affected by the bleed attack!
-                return;
-            }
-            */
-           // attacker.SendLocalizedMessage(1060159); // Your target is bleeding!
-            defender.SendAsciiMessage("you are diseased!"); 
 
             if (defender is PlayerMobile)
             {
                 defender.SendAsciiMessage("you have been diseased!"); 
             }
 
-            defender.PlaySound(0x133);
+
+            defender.PlaySound(0x5CC);
             defender.FixedParticles(0x377A, 1882, 25, 9950, 31, 0, EffectLayer.Waist);
 			
 			BeginDisease(defender, attacker);
@@ -120,7 +102,7 @@ namespace Server.Items
             private readonly Mobile m_Mobile;
             private int m_Count;
             public InternalTimer(Mobile from, Mobile m)
-                : base(TimeSpan.FromSeconds(5.0), TimeSpan.FromSeconds(5.0))
+                : base(TimeSpan.FromSeconds(8.0), TimeSpan.FromSeconds(12.0))
             {
                 m_From = from;
                 m_Mobile = m;
@@ -129,9 +111,9 @@ namespace Server.Items
 
             protected override void OnTick()
             {
-                DoDisease(m_Mobile, m_From, 3 - m_Count);
+                DoDisease(m_Mobile, m_From);
 
-                if (++m_Count == 3)
+                if (++m_Count == 4)
                     EndDisease(m_Mobile, true);
             }
         }

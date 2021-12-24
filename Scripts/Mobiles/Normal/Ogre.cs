@@ -1,4 +1,4 @@
-using System;
+    using System;
 using Server.Items;
 
 namespace Server.Mobiles
@@ -21,7 +21,7 @@ namespace Server.Mobiles
             this.SetHits(100, 117);
             this.SetMana(0);
 
-            this.SetDamage(9, 11);
+            this.SetDamage(5, 15);
 
             this.SetDamageType(ResistanceType.Physical, 100);
 

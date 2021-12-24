@@ -34,7 +34,7 @@ namespace VitaNex.Items
 		{
 			if (ItemID == 0x4910 || ItemID == 0x4911)
 			{
-				ContainerData = new ContainerData(0x3E8, new Rectangle2D(90, 90, 460, 280), 0x42);
+				ContainerData = new ContainerData(0x3E8, new Rectangle2D(90, 90, 460 *2, 280*2), 0x42);
 				return;
 			}
 

@@ -2492,7 +2492,7 @@ namespace Server.Items
                 if (this.Parent is Mobile)
                     ((Mobile)this.Parent).LocalOverheadMessage(MessageType.Regular, 0x3B2, 1061121); // Your equipment is severely damaged.
             }
-            else
+            else if (this.m_HitPoints <= 0)
             {
                 this.Delete();
             }
