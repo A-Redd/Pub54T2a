@@ -2938,8 +2938,8 @@ namespace Server.Items
 
             if (m_Quality == ArmorQuality.Exceptional)
                 sb.Append("exceptional, ");
-            //if (m_Quality == ArmorQuality.Masterwork)
-               // sb.Append("masterwork, ");
+            if (this.Resource != CraftResource.Iron && this.Resource != CraftResource.RegularLeather)
+                sb.AppendFormat("{0}, ",this.Resource.ToString().ToLower());
 
             if (Identified)
             {
