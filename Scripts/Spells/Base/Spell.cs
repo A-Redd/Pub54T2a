@@ -398,20 +398,14 @@ namespace Server.Spells
 		public virtual double GetDamageScalar(Mobile target)
 		{
 			double scalar = 1.0;
-
-			if (!Core.AOS) //EvalInt stuff for AoS is handled elsewhere
+            
+                  
+            if (!Core.AOS) //EvalInt stuff for AoS is handled elsewhere
 			{
 				double casterEI = m_Caster.Skills[DamageSkill].Value;
-				double targetRS = target.Skills[SkillName.MagicResist].Value;
+				double targetRS = target.Skills[SkillName.MagicResist].Value;               
 
-				/*
-				if( Core.AOS )
-				targetRS = 0;
-				*/
-
-				//m_Caster.CheckSkill( DamageSkill, 0.0, 120.0 );
-
-				if (casterEI > targetRS)
+                if (casterEI > targetRS)
 				{
 					scalar = (1.0 + ((casterEI - targetRS) / 500.0));
 				}

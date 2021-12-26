@@ -85,6 +85,7 @@ namespace Server.Items
         {
             list.Add(new GoHomeEntry(from, item));
             list.Add(new SetHomeEntry(from, item));
+            list.Add(new RefreshEntry(from, item));
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -194,7 +195,7 @@ namespace Server.Items
             {
                 // return to staff status
                 from.AccessLevel = this.m_StaffLevel;
-                from.Blessed = true;
+                from.Blessed = false;
             }
             else
             {
@@ -241,6 +242,25 @@ namespace Server.Items
                 this.m_Item.HomeLocation = this.m_Mobile.Location;
                 this.m_Item.HomeMap = this.m_Mobile.Map;
                 this.m_Mobile.SendMessage("The home location on your orb has been set to your current position.");
+            }
+        }
+
+        private class RefreshEntry : ContextMenuEntry
+        {
+            private readonly StaffOrb m_Item;
+            private readonly Mobile m_Mobile;
+            public RefreshEntry(Mobile from, Item item)
+                : base(10429)
+            {
+                this.m_Item = (StaffOrb)item;
+                this.m_Mobile = from;
+            }
+
+            public override void OnClick()
+            {
+                this.m_Mobile.Hits = this.m_Mobile.HitsMax;
+                this.m_Mobile.Mana = this.m_Mobile.ManaMax;
+                this.m_Mobile.Stam = this.m_Mobile.StamMax;
             }
         }
 

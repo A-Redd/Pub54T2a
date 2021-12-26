@@ -51,8 +51,8 @@ namespace Server.Items
                 m.PlaySound(0x133);
                 AOS.Damage(m, from, damage, false, 0, 0, 0, 0, 0, 0, 100, false, false, false);
 
-                 m.PrivateOverheadMessage(MessageType.Regular, 1882, true, "-" + (damage), m.NetState);//onhitgiven
-                 m.PrivateOverheadMessage(MessageType.Regular, 1882, true, "-" + (damage), from.NetState);//onhit
+                 m.PrivateOverheadMessage(MessageType.Regular, 1882, true, "-" + (damage), from.NetState);//onhitgiven
+                // m.PrivateOverheadMessage(MessageType.Regular, 1882, true, "-" + (damage), from.NetState);//onhit
 
             }
             else

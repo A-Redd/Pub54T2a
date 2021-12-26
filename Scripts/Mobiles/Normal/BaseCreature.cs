@@ -1587,6 +1587,8 @@ namespace Server.Mobiles
             }
             #endregion
 
+            this.PrivateOverheadMessage(MessageType.Regular, 438, true, "-" + (amount), from.NetState);
+
             base.OnDamage(amount, from, willKill);
         }
 
@@ -4117,24 +4119,24 @@ namespace Server.Mobiles
 
         public void SetHits(int val)
         {
-            if (val < 1000 && !Core.AOS)
+            if (val < 12500 && !Core.AOS)
             {
                 val = (val * 100) / 60;
             }
 
-            m_HitsMax = RawStr;
-            Hits = RawStr;
+            m_HitsMax = val;
+            Hits = val;
         }
 
         public void SetHits(int min, int max)
         {
-            if (min < 1000 && !Core.AOS)
+            if (min < 12500 && !Core.AOS)
             {
                 min = (min * 100) / 60;
                 max = (max * 100) / 60;
             }
 
-            m_HitsMax = Utility.RandomMinMax(RawStr, RawStr);
+            m_HitsMax = Utility.RandomMinMax(min, max);
             Hits = HitsMax;
         }
 

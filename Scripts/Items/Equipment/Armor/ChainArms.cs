@@ -2,18 +2,20 @@ using System;
 
 namespace Server.Items
 {
-    [FlipableAttribute(0x144e, 0x1453)]
-    public class BoneArms : BaseArmor
+    [FlipableAttribute(0x13ee, 0x13ef)]
+    public class ChainArms : BaseArmor
     {
-		public override bool IsArtifact { get { return true; } }
         [Constructable]
-        public BoneArms()
-            : base(0x144E)
+        public ChainArms()
+            : base(0x13EE)
         {
-            this.Weight = 2.0;
+            this.Weight = 10.0;
+            this.Name = "chainmail sleeves";
+            Hue = 1001;
+
         }
 
-        public BoneArms(Serial serial)
+        public ChainArms(Serial serial)
             : base(serial)
         {
         }
@@ -36,93 +38,78 @@ namespace Server.Items
         {
             get
             {
-                return 4;
+                return 1;
             }
         }
         public override int BasePoisonResistance
         {
             get
             {
-                return 2;
+                return 5;
             }
         }
         public override int BaseEnergyResistance
         {
             get
             {
-                return 4;
+                return 3;
             }
         }
         public override int InitMinHits
         {
             get
             {
-                return 25;
+                return 40;
             }
         }
         public override int InitMaxHits
         {
             get
             {
-                return 30;
+                return 50;
             }
         }
         public override int AosStrReq
         {
             get
             {
-                return 55;
+                return 40;
             }
         }
         public override int OldStrReq
         {
             get
             {
-                return 40;
+                return 20;
             }
         }
-
         public override int ArmorBase
         {
             get
             {
-                return 30;
-            }
-        }
-        public override int RevertArmorBase
-        {
-            get
-            {
-                return 4;
+                return 26;
             }
         }
         public override ArmorMaterialType MaterialType
         {
             get
             {
-                return ArmorMaterialType.Bone;
-            }
-        }
-        public override CraftResource DefaultResource
-        {
-            get
-            {
-                return CraftResource.RegularLeather;
+                return ArmorMaterialType.Ringmail;
             }
         }
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
             writer.Write((int)0);
-
-            if (this.Weight == 1.0)
-                this.Weight = 2.0;
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
             int version = reader.ReadInt();
+
+            if (this.Weight == 1.0)
+                this.Weight = 15.0;
         }
     }
 }

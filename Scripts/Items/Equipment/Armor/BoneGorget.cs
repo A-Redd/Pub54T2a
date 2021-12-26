@@ -2,18 +2,18 @@ using System;
 
 namespace Server.Items
 {
-    [FlipableAttribute(0x144e, 0x1453)]
-    public class BoneArms : BaseArmor
+    public class BoneGorget : BaseArmor
     {
-		public override bool IsArtifact { get { return true; } }
         [Constructable]
-        public BoneArms()
-            : base(0x144E)
+        public BoneGorget()
+            : base(0x13D6)
         {
             this.Weight = 2.0;
+            this.Hue = 1446;
+            Name = "bone gorget";
         }
 
-        public BoneArms(Serial serial)
+        public BoneGorget(Serial serial)
             : base(serial)
         {
         }
@@ -22,28 +22,28 @@ namespace Server.Items
         {
             get
             {
-                return 3;
+                return 2;
             }
         }
         public override int BaseFireResistance
         {
             get
             {
-                return 3;
+                return 4;
             }
         }
         public override int BaseColdResistance
         {
             get
             {
-                return 4;
+                return 3;
             }
         }
         public override int BasePoisonResistance
         {
             get
             {
-                return 2;
+                return 3;
             }
         }
         public override int BaseEnergyResistance
@@ -57,43 +57,35 @@ namespace Server.Items
         {
             get
             {
-                return 25;
+                return 35;
             }
         }
         public override int InitMaxHits
         {
             get
             {
-                return 30;
+                return 45;
             }
         }
         public override int AosStrReq
         {
             get
             {
-                return 55;
+                return 25;
             }
         }
         public override int OldStrReq
         {
             get
             {
-                return 40;
+                return 25;
             }
         }
-
         public override int ArmorBase
         {
             get
             {
                 return 30;
-            }
-        }
-        public override int RevertArmorBase
-        {
-            get
-            {
-                return 4;
             }
         }
         public override ArmorMaterialType MaterialType
@@ -110,19 +102,24 @@ namespace Server.Items
                 return CraftResource.RegularLeather;
             }
         }
+        public override ArmorMeditationAllowance DefMedAllowance
+        {
+            get
+            {
+                return ArmorMeditationAllowance.None;
+            }
+        }
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
             writer.Write((int)0);
-
-            if (this.Weight == 1.0)
-                this.Weight = 2.0;
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
             int version = reader.ReadInt();
+         
         }
     }
 }

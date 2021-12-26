@@ -19,7 +19,7 @@ namespace Server.Items
         {
             get
             {
-                return (Core.AOS ? 20 : 9);
+                return (Core.AOS ? 20 : 15);
             }
         }
         public override int MaxHeal

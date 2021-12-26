@@ -1572,30 +1572,9 @@ namespace Server.Mobiles
 			get
 			{
 				int strBase;
-				int strOffs = GetStatOffset(StatType.Str);
-
-				if (Core.AOS)
-				{
-					strBase = Str; //this.Str already includes GetStatOffset/str
-					strOffs = AosAttributes.GetValue(this, AosAttribute.BonusHits);
-
-					if (Core.ML && strOffs > 25 && IsPlayer())
-					{
-						strOffs = 25;
-					}
-
-					if (AnimalForm.UnderTransformation(this, typeof(BakeKitsune)) ||
-						AnimalForm.UnderTransformation(this, typeof(GreyWolf)))
-					{
-						strOffs += 20;
-					}
-				}
-				else
-				{
-					strBase = RawStr;
-				}
-
-				return (strBase / 2) + 50 + strOffs;
+				//int strOffs = GetStatOffset(StatType.Str);
+                strBase = RawStr;
+				return strBase; //divines.2.0
 			}
 		}
 
@@ -2940,7 +2919,9 @@ namespace Server.Mobiles
 			#endregion
 
 			base.OnDamage(amount, from, willKill);
-		}
+
+            this.PrivateOverheadMessage(MessageType.Regular, 1882, true, "-" + (amount), this.NetState);
+        }
 
 		public override void Resurrect()
 		{
