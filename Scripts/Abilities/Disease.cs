@@ -49,7 +49,7 @@ namespace Server.Items
                 int damage = Utility.RandomMinMax(level +1 , level +1 * 2);
 
                 m.PlaySound(0x133);
-                AOS.Damage(m, from, damage, false, 0, 0, 0, 0, 0, 0, 100, false, false, false);
+                m.Hits -= damage;
 
                  m.PrivateOverheadMessage(MessageType.Regular, 1882, true, "-" + (damage), from.NetState);//onhitgiven
                 // m.PrivateOverheadMessage(MessageType.Regular, 1882, true, "-" + (damage), from.NetState);//onhit

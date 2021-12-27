@@ -335,8 +335,8 @@ namespace Server
 
         public static int GetValue(Mobile m, AosAttribute attribute)
         {
-            if (!Core.AOS)
-                return 0;
+           // if (!Core.AOS)
+                //return 0;
 
             List<Item> items = m.Items;
             int value = 0;

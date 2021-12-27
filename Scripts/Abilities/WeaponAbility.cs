@@ -286,7 +286,7 @@ namespace Server.Items
             return this.CheckSkills(from) && this.CheckMana(from, false);
         }
 
-        private static readonly WeaponAbility[] m_Abilities = new WeaponAbility[34]
+        private static readonly WeaponAbility[] m_Abilities = new WeaponAbility[35]
         {
             null,
             new ArmorIgnore(),
@@ -321,7 +321,8 @@ namespace Server.Items
             new InfusedThrow(),
             new MysticArc(),
             new Disrobe(),
-            new Disease()
+            new Disease(),
+            new Flurry()
 
         };
 
@@ -380,6 +381,7 @@ namespace Server.Items
 
         public static readonly WeaponAbility Disrobe = m_Abilities[32];
         public static readonly WeaponAbility Disease = m_Abilities[33];
+        public static readonly WeaponAbility Flurry = m_Abilities[34];
 
         public static bool IsWeaponAbility(Mobile m, WeaponAbility a)
         {

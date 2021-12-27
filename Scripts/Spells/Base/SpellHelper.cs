@@ -1079,17 +1079,20 @@ namespace Server.Spells
         {
             int iDamage = (int)damage;
 
-            PlayerMobile pm = (PlayerMobile)from;
-            double critdam = pm.CritDamage;
-
             ////divines 2.0 crits
-            if ((pm.CritChance) > Utility.Random(100) && (pm.CritDamage > 1))
+            ///
+            if (from is PlayerMobile)
             {
-                pm.SendMessage("Your spell critically hits!");
-                iDamage += Convert.ToInt32(iDamage + critdam / 100);
-                from.SendMessage("Damage increased by {0}. {1} from critdamage ", iDamage, critdam/100);
-            }
+                PlayerMobile pm = (PlayerMobile)from;
+                double critdam = pm.CritDamage;
 
+                if ((pm.CritChance) > Utility.Random(100) && (pm.CritDamage > 1))
+                {
+                    pm.SendMessage("Your spell critically hits!");
+                    iDamage += Convert.ToInt32(iDamage + critdam / 100);
+                    from.SendMessage("Damage increased by {0}. {1} from critdamage ", iDamage, critdam / 100);
+                }
+            }
             if (delay == TimeSpan.Zero)
             {
                 if (from is BaseCreature)
@@ -1114,6 +1117,7 @@ namespace Server.Spells
             }
         }
 
+        
         public static void Damage(Spell spell, Mobile target, double damage, int phys, int fire, int cold, int pois, int nrgy)
         {
             TimeSpan ts = GetDamageDelayForSpell(spell);
@@ -1159,19 +1163,20 @@ namespace Server.Spells
         {
             int iDamage = (int)damage;
 
-
-            PlayerMobile pm = (PlayerMobile)from;
-            double critdam = pm.CritDamage;
-
-            ////divines 2.0 crits
-            if ((pm.CritChance) > Utility.Random(100) && (pm.CritDamage >1))
+            if (from is PlayerMobile)
             {
-               int olddam = iDamage;
-                pm.SendMessage("Your spell critically hits!");
-                iDamage += Convert.ToInt32((iDamage * critdam)/100);
-                from.SendMessage("Damage increased from {0} from {1}% critdamage ", olddam, critdam);
-            }
+                PlayerMobile pm = (PlayerMobile)from;
+                double critdam = pm.CritDamage;
 
+                ////divines 2.0 crits
+                if ((pm.CritChance) > Utility.Random(100) && (pm.CritDamage > 1))
+                {
+                    int olddam = iDamage;
+                    pm.SendMessage("Your spell critically hits!");
+                    iDamage += Convert.ToInt32((iDamage * critdam) / 100);
+                    from.SendMessage("Damage increased from {0} from {1}% critdamage ", olddam, critdam);
+                }
+            }
             if (delay == TimeSpan.Zero)
             {
                 if (from is BaseCreature)

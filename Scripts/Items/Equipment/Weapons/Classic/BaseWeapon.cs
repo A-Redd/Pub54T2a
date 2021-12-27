@@ -1327,7 +1327,7 @@ namespace Server.Items
 
                 if (defWeapon is BaseRanged) //divines 2.0 ranged weapon change
                 {
-                    theirValue -= 65.0;
+                    theirValue -= 60.0;
                 }
             }
 
@@ -1340,7 +1340,7 @@ namespace Server.Items
                 chance = 0.02;
             }
 
-            Console.WriteLine("Chance for {0} to hit {1} was {2}%", attacker.Name, defender.Name, chance);
+            //Console.WriteLine("Chance for {0} to hit {1} was {2}%", attacker.Name, defender.Name, chance);
             return attacker.CheckSkill(atkSkill.SkillName, chance);
 
         }
