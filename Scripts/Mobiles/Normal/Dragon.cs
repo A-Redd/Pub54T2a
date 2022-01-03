@@ -38,7 +38,7 @@ namespace Server.Mobiles
             this.Fame = 15000;
             this.Karma = -15000;
 
-            this.VirtualArmor = 60;
+            this.VirtualArmor = 30;
 
             this.Tamable = true;
             this.ControlSlots = 3;

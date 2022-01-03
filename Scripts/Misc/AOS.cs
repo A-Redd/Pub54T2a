@@ -1102,8 +1102,8 @@ namespace Server
 
         public static int GetValue(Mobile m, AosWeaponAttribute attribute)
         {
-            if (!Core.AOS)
-                return 0;
+          //  if (!Core.AOS)
+              //  return 0;
 
             List<Item> items = m.Items;
             int value = 0;
@@ -1650,8 +1650,8 @@ namespace Server
 
         public static int GetValue(Mobile m, AosArmorAttribute attribute)
         {
-            if (!Core.AOS)
-                return 0;
+          //  if (!Core.AOS)
+               // return 0;
 
             List<Item> items = m.Items;
             int value = 0;
@@ -2180,8 +2180,8 @@ namespace Server
 
         public static int GetValue(Mobile m, SAAbsorptionAttribute attribute)
         {
-            if (!Core.AOS)
-                return 0;
+            //if (!Core.AOS)
+               // return 0;
 
             List<Item> items = m.Items;
             int value = 0;
@@ -2771,8 +2771,8 @@ namespace Server
 
         public int GetValue(int bitmask)
         {
-            if (!Core.AOS)
-                return 0;
+           // if (!Core.AOS)
+              //  return 0;
 
             uint mask = (uint)bitmask;
 

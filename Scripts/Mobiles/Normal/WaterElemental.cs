@@ -23,9 +23,9 @@ namespace Server.Mobiles
             this.SetDex(66, 85);
             this.SetInt(101, 125);
 
-            this.SetHits(76, 93);
+            this.SetHits(125, 155);
 
-            this.SetDamage(7, 9);
+            this.SetDamage(4, 12);
 
             this.SetDamageType(ResistanceType.Physical, 100);
 
@@ -44,11 +44,11 @@ namespace Server.Mobiles
             this.Fame = 4500;
             this.Karma = -4500;
 
-            this.VirtualArmor = 40;
+            this.VirtualArmor = 20;
             this.ControlSlots = 3;
             this.CanSwim = true;
 
-            this.PackItem(new BlackPearl(3));
+           // this.PackItem(new BlackPearl(3));
         }
 
         public WaterElemental(Serial serial)

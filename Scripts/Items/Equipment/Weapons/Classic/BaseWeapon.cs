@@ -1007,6 +1007,16 @@ namespace Server.Items
             int dexBonus = m_AosAttributes.BonusDex;
             int intBonus = m_AosAttributes.BonusInt;
 
+           // var mo = (Mobile)from;
+           // var weap = mo.Weapon as BaseWeapon;
+
+           // TimeSpan oldDelay = weap.GetDelay(from);
+             
+           // if (weap != null && mo.NextCombatTime >= (DateTime.MinValue + oldDelay.TotalMilliseconds));
+                // mo.NextCombatTime -= oldDelay;
+                // mo.NextCombatTime += Core.TickCount + (int)GetDelay(mo).TotalMilliseconds;
+            
+
             if ((strBonus != 0 || dexBonus != 0 || intBonus != 0))
             {
                 Mobile m = from;
@@ -1708,93 +1718,40 @@ namespace Server.Items
             Layer.Shirt
         };
 
-		public virtual int AbsorbDamage(Mobile attacker, Mobile defender, int damage)
-		{
-			if (Core.AOS)
-			{
-				return AbsorbDamageAOS(attacker, defender, damage);
-			}
+        public virtual int AbsorbDamage(Mobile attacker, Mobile defender, int damage)
+        {
+            double chance = Utility.RandomDouble();
+            BaseArmor armor;
 
-			BaseShield shield = defender.FindItemOnLayer(Layer.TwoHanded) as BaseShield;
-			if (shield != null)
-			{
-				damage = shield.OnHit(this, damage);
-			}
+            if (chance < 0.07)
+                armor = defender.NeckArmor as BaseArmor;
+            else if (chance < 0.14)
+                armor = defender.HandArmor as BaseArmor;
+            else if (chance < 0.28)
+                armor = defender.ArmsArmor as BaseArmor;
+            else if (chance < 0.43)
+                armor = defender.HeadArmor as BaseArmor;
+            else if (chance < 0.65)
+                armor = defender.LegsArmor as BaseArmor;
+            else
+                armor = defender.ChestArmor as BaseArmor;
 
-			double chance = Utility.RandomDouble();
+            BaseShield shield = defender.FindItemOnLayer(Layer.TwoHanded) as BaseShield;
+            if (shield != null)
+                damage = shield.OnHit(this, damage);
 
-			Item armorItem;
+            if (armor != null)
+                damage = armor.OnHit(this, damage);
 
-			if (chance < 0.07)
-			{
-				armorItem = defender.NeckArmor;
-			}
-			else if (chance < 0.14)
-			{
-				armorItem = defender.HandArmor;
-			}
-			else if (chance < 0.28)
-			{
-				armorItem = defender.ArmsArmor;
-			}
-			else if (chance < 0.43)
-			{
-				armorItem = defender.HeadArmor;
-			}
-			else if (chance < 0.65)
-			{
-				armorItem = defender.LegsArmor;
-			}
-			else
-			{
-				armorItem = defender.ChestArmor;
-			}
+            int virtualArmor = (defender.VirtualArmor + defender.VirtualArmorMod);
+            if (virtualArmor > 0)
+                damage -= Utility.RandomMinMax(virtualArmor / 4, virtualArmor) / 4;             
 
-			IWearableDurability armor = armorItem as IWearableDurability;
-
-			if (armor != null)
-			{
-				damage = armor.OnHit(this, damage);
-			}
-
-			int virtualArmor = defender.VirtualArmor + defender.VirtualArmorMod;
-
-			damage -= XmlAttach.OnArmorHit(attacker, defender, armorItem, this, damage);
+            damage -= XmlAttach.OnArmorHit(attacker, defender, armor, this, damage);
 			damage -= XmlAttach.OnArmorHit(attacker, defender, shield, this, damage);
 
-			if (virtualArmor > 0)
-			{
-				double scalar;
-
-				if (chance < 0.14)
-				{
-					scalar = 0.07;
-				}
-				else if (chance < 0.28)
-				{
-					scalar = 0.14;
-				}
-				else if (chance < 0.43)
-				{
-					scalar = 0.15;
-				}
-				else if (chance < 0.65)
-				{
-					scalar = 0.22;
-				}
-				else
-				{
-					scalar = 0.35;
-				}
-
-				int from = (int)(virtualArmor * scalar) / 2;
-				int to = (int)(virtualArmor * scalar);
-
-				damage -= Utility.Random(from, (to - from) + 1);
-			}
-
-			return damage;
-		}
+            return damage;
+        }
 
 		public virtual int GetPackInstinctBonus(Mobile attacker, Mobile defender)
 		{
@@ -2071,7 +2028,7 @@ namespace Server.Items
 			#endregion
 
 			#region Mondain's Legacy
-			if (Core.ML)
+			if (!Core.ML)
 			{
 				BaseTalisman talisman = attacker.Talisman as BaseTalisman;
 
@@ -2282,7 +2239,7 @@ namespace Server.Items
 
 			double propertyBonus = (move == null) ? 1.0 : move.GetPropertyBonus(attacker);
 
-			if (Core.AOS)
+			if (!Core.AOS)
 			{
 				int lifeLeech = 0;
 				int stamLeech = 0;
@@ -2295,7 +2252,7 @@ namespace Server.Items
 					stamLeech += 100; // HitLeechStam% chance to leech 100% of damage as stamina
 				}
 
-				if (Core.SA) // New formulas
+				if (!Core.SA) // New formulas
 				{
                     lifeLeech = (int)(WeaponAttributes.HitLeechHits * propertyBonus);
                     manaLeech = (int)(WeaponAttributes.HitLeechMana * propertyBonus);
@@ -2449,7 +2406,7 @@ namespace Server.Items
 				}
 			}
 
-			if (Core.AOS)
+			if (!Core.AOS)
 			{
 				int physChance = (int)(AosWeaponAttributes.GetValue(attacker, AosWeaponAttribute.HitPhysicalArea) * propertyBonus);
 				int fireChance = (int)(AosWeaponAttributes.GetValue(attacker, AosWeaponAttribute.HitFireArea) * propertyBonus);
@@ -2760,8 +2717,6 @@ namespace Server.Items
 		#region Stygian Abyss
 		public virtual void DoCurse(Mobile attacker, Mobile defender)
 		{
-
-
             defender.FixedParticles(0x374A, 10, 15, 5028, EffectLayer.Waist);
 			defender.PlaySound(0x1EA);
 			defender.AddStatMod(
@@ -3370,6 +3325,10 @@ namespace Server.Items
 
 			int damage = (int)ScaleDamageOld(attacker, GetBaseDamage(attacker), true);
 
+            if (defender is BaseCreature && attacker is BaseCreature) //divines 2.0
+            {
+                damage *= 2;
+            }
             // pre-AOS, halve damage if the defender is a player or the attacker is not a player
             if (defender is PlayerMobile && attacker is BaseCreature)
             {
@@ -3382,9 +3341,6 @@ namespace Server.Items
                     damage -= AOS.Scale(damage, y);
                 }
             }
-
-           // defender.PrivateOverheadMessage(MessageType.Regular, 56, true, "-" + (damage), attacker.NetState);//onhitgiven
-           // defender.PrivateOverheadMessage(MessageType.Regular, 40, true, "-" + (damage), defender.NetState);//onhit
             return damage;
 		}
 
@@ -4942,7 +4898,7 @@ namespace Server.Items
             int prop;
             double fprop;
 
-			if (Core.ML && this is BaseRanged && ((BaseRanged)this).Balanced)
+			if (this is BaseRanged && ((BaseRanged)this).Balanced)
 			{
 				list.Add(1072792); // Balanced
 			}

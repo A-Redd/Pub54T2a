@@ -18,13 +18,9 @@ namespace Server.Mobiles
             this.SetDex(36, 55);
             this.SetInt(16, 30);
 
-            this.SetHits(16, 30);
+            this.SetHits(45, 60);
 
             this.SetDamage(5, 10);
-
-            this.SetDamageType(ResistanceType.Physical, 100);
-
-            this.SetResistance(ResistanceType.Physical, 15, 20);
 
             this.SetSkill(SkillName.MagicResist, 15.1, 20.0);
             this.SetSkill(SkillName.Tactics, 25.1, 40.0);
@@ -33,7 +29,7 @@ namespace Server.Mobiles
             this.Fame = 450;
             this.Karma = -450;
 
-            this.VirtualArmor = 18;
+            this.VirtualArmor = 10;
         }
 
         public HeadlessOne(Serial serial)

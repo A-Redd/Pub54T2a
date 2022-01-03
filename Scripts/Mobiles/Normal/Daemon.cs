@@ -20,9 +20,9 @@ namespace Server.Mobiles
             SetDex(76, 95);
             SetInt(301, 325);
 
-            SetHits(286, 303);
+            SetHits(400, 460);
 
-            SetDamage(7, 14);
+            SetDamage(25);
 
             SetDamageType(ResistanceType.Physical, 100);
 
@@ -44,26 +44,6 @@ namespace Server.Mobiles
             VirtualArmor = 58;
 
             QLPoints = 5;
-
-            switch (Utility.Random(20))
-            {
-                case 0:
-                    PackItem(new LichFormScroll());
-                    break;
-                case 1:
-                    PackItem(new PoisonStrikeScroll());
-                    break;
-                case 2:
-                    PackItem(new StrangleScroll());
-                    break;
-                case 3:
-                    PackItem(new VengefulSpiritScroll());
-                    break;
-                case 4:
-                    PackItem(new WitherScroll());
-                    break;
-            }
-
 
             ControlSlots = Core.SE ? 4 : 5;
         }

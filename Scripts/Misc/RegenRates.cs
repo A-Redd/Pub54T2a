@@ -20,16 +20,13 @@ namespace Server.Misc
         public static void Configure()
         {
             Mobile.DefaultHitsRate = TimeSpan.FromSeconds(11.0);
-            Mobile.DefaultStamRate = TimeSpan.FromSeconds(7.0);
-            Mobile.DefaultManaRate = TimeSpan.FromSeconds(7.0);
+            Mobile.DefaultStamRate = TimeSpan.FromSeconds(5.0);
+            Mobile.DefaultManaRate = TimeSpan.FromSeconds(5.0);
 
             Mobile.ManaRegenRateHandler = new RegenRateHandler(Mobile_ManaRegenRate);
+            Mobile.StamRegenRateHandler = new RegenRateHandler(Mobile_StamRegenRate);
+            Mobile.HitsRegenRateHandler = new RegenRateHandler(Mobile_HitsRegenRate);
 
-            if (Core.AOS)
-            {
-                Mobile.StamRegenRateHandler = new RegenRateHandler(Mobile_StamRegenRate);
-                Mobile.HitsRegenRateHandler = new RegenRateHandler(Mobile_HitsRegenRate);
-            }
         }
 
         public static double GetArmorOffset(Mobile from)
@@ -76,47 +73,9 @@ namespace Server.Misc
         private static TimeSpan Mobile_HitsRegenRate(Mobile from)
         {
             int points = AosAttributes.GetValue(from, AosAttribute.RegenHits);
-
-            if (from is BaseCreature && !((BaseCreature)from).IsAnimatedDead)
-                points += 4;
-
-            if ((from is BaseCreature && ((BaseCreature)from).IsParagon) || from is Leviathan)
-                points += 40;
-
-            if (Core.ML && from.Race == Race.Human)	//Is this affected by the cap?
-                points += 2;
-           
+          
             if (points < 0)
                 points = 0;
-
-            if (Core.ML && from is PlayerMobile)	//does racial bonus go before/after?
-                points = Math.Min(points, 18);
-
-            if (CheckTransform(from, typeof(HorrificBeastSpell)))
-                points += 20;
-
-            if (from is BaseCreature && ((BaseCreature)from).HumilityBuff > 0)
-            {
-                switch (((BaseCreature)@from).HumilityBuff)
-                {
-                    case 1:
-                        points += 10;
-                        break;
-                    case 2:
-                        points += 20;
-                        break;
-                    case 3:
-                        points += 30;
-                        break;
-                }
-            }
-
-            if (CheckAnimal(from, typeof(Dog)) || CheckAnimal(from, typeof(Cat)))
-                points += from.Skills[SkillName.Ninjitsu].Fixed / 30;
-
-            if (Core.AOS)
-                foreach (RegenBonusHandler handler in HitsBonusHandlers)
-                    points += handler(from);
 
             return TimeSpan.FromSeconds(1.0 / (0.1 * (1 + points)));
         }
@@ -130,26 +89,13 @@ namespace Server.Misc
 
             int points = (int)(from.Skills[SkillName.Focus].Value * 0.1);
 
-            if ((from is BaseCreature && ((BaseCreature)from).IsParagon) || from is Leviathan)
-                points += 40;
-
             int cappedPoints = AosAttributes.GetValue(from, AosAttribute.RegenStam);
-
-            if (CheckTransform(from, typeof(VampiricEmbraceSpell)))
-                cappedPoints += 15;
-
-            if (CheckAnimal(from, typeof(Kirin)))
-                cappedPoints += 20;
-
-            if (Core.ML && from is PlayerMobile)
-                cappedPoints = Math.Min(cappedPoints, 24);
 
             points += cappedPoints;
 
             if (points < -1)
                 points = -1;
 
-            if (Core.AOS)
                 foreach (RegenBonusHandler handler in StamBonusHandlers)
                     points += handler(from);
 

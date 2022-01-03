@@ -4119,10 +4119,10 @@ namespace Server.Mobiles
 
         public void SetHits(int val)
         {
-            if (val < 12500 && !Core.AOS)
-            {
-                val = (val * 100) / 60;
-            }
+           // if (val < 1000 && !Core.AOS)
+          //  {
+                val = (val * 100) / 85;
+           // }
 
             m_HitsMax = val;
             Hits = val;
@@ -4130,11 +4130,11 @@ namespace Server.Mobiles
 
         public void SetHits(int min, int max)
         {
-            if (min < 12500 && !Core.AOS)
-            {
-                min = (min * 100) / 60;
-                max = (max * 100) / 60;
-            }
+           // if (min < 1000 && !Core.AOS)
+           // {
+                min = (min * 100) / 85;
+                max = (max * 100) / 85;
+           // }
 
             m_HitsMax = Utility.RandomMinMax(min, max);
             Hits = HitsMax;

@@ -384,17 +384,6 @@ namespace Server.Items
             return base.OnDragLift(from);
         }
 
-        public override bool CanEquip(Mobile m)
-        {
-            if (m.NetState != null && !m.NetState.SupportsExpansion(Expansion.ML))
-            {
-                m.SendLocalizedMessage(1072791); // You must upgrade to Mondain's Legacy in order to use that item.				
-                return false;
-            }
-
-            return true;
-        }
-
         public virtual int BasePhysicalResistance { get { return 0; } }
         public virtual int BaseFireResistance { get { return 0; } }
         public virtual int BaseColdResistance { get { return 0; } }

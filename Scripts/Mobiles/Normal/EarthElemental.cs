@@ -18,7 +18,7 @@ namespace Server.Mobiles
             this.SetDex(66, 85);
             this.SetInt(71, 92);
 
-            this.SetHits(76, 93);
+            this.SetHits(125, 155);
 
             this.SetDamage(5, 20);
 
@@ -41,8 +41,8 @@ namespace Server.Mobiles
             this.VirtualArmor = 34;
             this.ControlSlots = 2;
 
-            this.PackItem(new FertileDirt(Utility.RandomMinMax(1, 4)));
-            this.PackItem(new MandrakeRoot());
+            //this.PackItem(new FertileDirt(Utility.RandomMinMax(1, 4)));
+           // this.PackItem(new MandrakeRoot());
 			
             Item ore = new IronOre(5);
             ore.ItemID = 0x19B7;

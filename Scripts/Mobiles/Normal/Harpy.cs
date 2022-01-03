@@ -17,17 +17,9 @@ namespace Server.Mobiles
             this.SetDex(86, 110);
             this.SetInt(51, 75);
 
-            this.SetHits(58, 72);
+            this.SetHits(88, 112);
 
-            this.SetDamage(5, 7);
-
-            this.SetDamageType(ResistanceType.Physical, 100);
-
-            this.SetResistance(ResistanceType.Physical, 25, 30);
-            this.SetResistance(ResistanceType.Fire, 10, 20);
-            this.SetResistance(ResistanceType.Cold, 10, 30);
-            this.SetResistance(ResistanceType.Poison, 20, 30);
-            this.SetResistance(ResistanceType.Energy, 10, 20);
+            this.SetDamage(7, 10);
 
             this.SetSkill(SkillName.MagicResist, 50.1, 65.0);
             this.SetSkill(SkillName.Tactics, 70.1, 100.0);
@@ -36,7 +28,7 @@ namespace Server.Mobiles
             this.Fame = 2500;
             this.Karma = -2500;
 
-            this.VirtualArmor = 28;
+            this.VirtualArmor = 15;
         }
 
         public Harpy(Serial serial)

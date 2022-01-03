@@ -26,7 +26,7 @@ namespace Server.Mobiles
             this.SetDex(151, 200);
             this.SetInt(66, 76);
 
-            this.SetHits(376, 450);
+            this.SetHits(476, 550);
             this.SetMana(40);
 
             this.SetDamage(14, 18);
@@ -46,45 +46,13 @@ namespace Server.Mobiles
             this.SetSkill(SkillName.Tactics, 95.1, 110.0);
             this.SetSkill(SkillName.Wrestling, 97.6, 107.5);
 
-            this.Fame = 8500;
-            this.Karma = -8500;
+            this.Fame = 9500;
+            this.Karma = -9500;
 
             if (Core.ML && Utility.RandomDouble() < .33)
                 this.PackItem(Engines.Plants.Seed.RandomPeculiarSeed(1));
 
-            switch( Utility.Random(10) )
-            {
-                case 0:
-                    this.PackItem(new LeftArm());
-                    break;
-                case 1:
-                    this.PackItem(new RightArm());
-                    break;
-                case 2:
-                    this.PackItem(new Torso());
-                    break;
-                case 3:
-                    this.PackItem(new Bone());
-                    break;
-                case 4:
-                    this.PackItem(new RibCage());
-                    break;
-                case 5:
-                    this.PackItem(new RibCage());
-                    break;
-                case 6:
-                    this.PackItem(new BonePile());
-                    break;
-                case 7:
-                    this.PackItem(new BonePile());
-                    break;
-                case 8:
-                    this.PackItem(new BonePile());
-                    break;
-                case 9:
-                    this.PackItem(new BonePile());
-                    break;
-            }
+           
         }
 
         public TsukiWolf(Serial serial)

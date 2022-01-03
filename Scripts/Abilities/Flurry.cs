@@ -41,7 +41,7 @@ namespace Server.Items
             int level = 0;
             level = from.TithingPoints; 
                 
-            if (m.Alive)
+            if (m.Alive && from.InRange(m, 2))
             {
                 int damage = Utility.RandomMinMax(level +1 , level +3 );
 

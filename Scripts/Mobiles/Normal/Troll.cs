@@ -17,9 +17,9 @@ namespace Server.Mobiles
             this.SetDex(46, 65);
             this.SetInt(46, 70);
 
-            this.SetHits(106, 123);
+            this.SetHits(175, 205);
 
-            this.SetDamage(8, 14);
+            this.SetDamage(5, 17);
 
             this.SetDamageType(ResistanceType.Physical, 100);
 
@@ -36,7 +36,7 @@ namespace Server.Mobiles
             this.Fame = 3500;
             this.Karma = -3500;
 
-            this.VirtualArmor = 40;
+            this.VirtualArmor = 15;
         }
 
         public Troll(Serial serial)
@@ -67,7 +67,7 @@ namespace Server.Mobiles
         }
         public override void GenerateLoot()
         {
-            this.AddLoot(LootPack.Average);
+            this.AddLoot(LootPack.Average,2);
         }
 
         public override void Serialize(GenericWriter writer)

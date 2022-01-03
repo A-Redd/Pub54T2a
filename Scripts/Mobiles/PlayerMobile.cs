@@ -3096,12 +3096,12 @@ namespace Server.Mobiles
 						m_InsuranceCost += cost;
 						item.PayedInsurance = true;
 						//SendLocalizedMessage(1060398, cost.ToString()); // ~1_AMOUNT~ gold has been withdrawn from your bank box.
-                        SendAsciiMessage("null gold withdrawl");
+                        //SendAsciiMessage("null gold withdrawl");
                     }
 					else
 					{
 						//SendLocalizedMessage(1061079, "", 0x23); // You lack the funds to purchase the insurance
-                        SendAsciiMessage("null insurance");
+                        //SendAsciiMessage("null insurance");
                         item.PayedInsurance = false;
 						item.Insured = false;
 						m_NonAutoreinsuredItems++;
@@ -3124,7 +3124,7 @@ namespace Server.Mobiles
 					}
 				}
 
-				return true;
+				return false;
 			}
 
 			return false;
@@ -3179,7 +3179,7 @@ namespace Server.Mobiles
 			
 			//if (m_NonAutoreinsuredItems > 0)
 			//{
-				SendLocalizedMessage(1061115);
+				//SendLocalizedMessage(1061115);
 			//}
 
 			base.OnDeath(c);
@@ -3240,13 +3240,13 @@ namespace Server.Mobiles
 				{
 					if (gainedPath)
 					{
-						//m.SendLocalizedMessage(1049367); // You have gained a path in Justice!
-                        m.SendAsciiMessage("null justice gain.");
+						m.SendLocalizedMessage(1049367); // You have gained a path in Justice!
+                       // m.SendAsciiMessage("null justice gain.");
                     }
 					else
 					{
-						//m.SendLocalizedMessage(1049363); // You have gained in Justice.
-                        m.SendAsciiMessage("null justic gain.");
+						m.SendLocalizedMessage(1049363); // You have gained in Justice.
+                       // m.SendAsciiMessage("null justic gain.");
                     }
 
 					m.FixedParticles(0x375A, 9, 20, 5027, EffectLayer.Waist);
@@ -3262,8 +3262,8 @@ namespace Server.Mobiles
 
 				if (pm.m_InsuranceBonus > 0)
 				{
-					//pm.SendLocalizedMessage(1060397, pm.m_InsuranceBonus.ToString());
-                    pm.SendAsciiMessage("null gold deposit insurance.");
+					pm.SendLocalizedMessage(1060397, pm.m_InsuranceBonus.ToString());
+                   // pm.SendAsciiMessage("null gold deposit insurance.");
                     // ~1_AMOUNT~ gold has been deposited into your bank box.
                 }
 			}
