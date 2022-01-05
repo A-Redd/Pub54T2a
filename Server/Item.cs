@@ -529,8 +529,16 @@ namespace Server
 		/// <summary>
 		///     Large pie shape (90 degrees), north-west corner. Equivalent to <c>LightType.NorthWestBig</c>.
 		/// </summary>
-		NorthWestBig2
-	}
+		NorthWestBig2,
+        /// <summary>
+        /// SuperBig Custom <c>LightType.SuperBig</c>.
+        /// </summary>
+        Circle450,
+        /// <summary>
+        /// SuperBig Blue Custom <c>LightType.SuperBigBlue</c>.
+        /// </summary>
+        Circle375
+    }
 
 	/// <summary>
 	///     Enumeration of an item's loot and steal state.

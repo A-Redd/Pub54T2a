@@ -1699,7 +1699,7 @@ namespace Server
 
 					if (_SleepTimer != null)
 					{
-						Send(SpeedControl.Disable);
+						Send(SpeedControl.WalkSpeed);
 						_SleepTimer.Stop();
 						_SleepTimer = null;
 					}

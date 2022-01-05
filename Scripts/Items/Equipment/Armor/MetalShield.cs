@@ -11,6 +11,9 @@ namespace Server.Items
             : base(0x1B7B)
         {
             this.Weight = 6.0;
+
+           // this.Burning = true;
+            this.Light = LightType.Circle300;
         }
 
         public MetalShield(Serial serial)

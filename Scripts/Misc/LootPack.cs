@@ -433,7 +433,7 @@ namespace Server
 			    new LootPack(
                 new[]
                 {
-                  new LootPackEntry(true, Gold, 100.00, "3d5+7"),
+                  //new LootPackEntry(true, Gold, 100.00, "3d5+7"),
                   new LootPackEntry(false, Instruments, 0.02, 1),
 
                   new LootPackEntry( false, OldMagicItems,      1.50, 1, 1, 5, 35 ),
@@ -448,7 +448,7 @@ namespace Server
 			new LootPack(
 				new[]
 				{
-					new LootPackEntry(true, Gold, 100.00, "6d5+25"),
+					//new LootPackEntry(true, Gold, 100.00, "6d5+25"),
                     new LootPackEntry(false, Instruments, 0.10, 1),
 
                     new LootPackEntry( false, OldMagicItems,      2.50, 1, 1, 5, 35 ),
@@ -464,7 +464,7 @@ namespace Server
 			new LootPack(
 				new[]
 				{
-					new LootPackEntry(true, Gold, 100.00, "5d5+75"),
+					//new LootPackEntry(true, Gold, 100.00, "5d5+75"),
                     new LootPackEntry(false, Instruments, 0.40, 1),
 
                     new LootPackEntry( false, OldMagicItems,      3.00, 1, 1, 5, 35 ),
@@ -479,7 +479,7 @@ namespace Server
 			new LootPack(
 				new[]
 				{
-					new LootPackEntry(true, Gold, 100.00, "5d11+105"),
+					//new LootPackEntry(true, Gold, 100.00, "5d11+105"),
                     new LootPackEntry(false, Instruments, 1.00, 1),
 
                     new LootPackEntry( false, OldMagicItems,      5.00, 1, 1, 5, 35 ),
@@ -494,7 +494,7 @@ namespace Server
 			new LootPack(
 				new[]
 				{
-					new LootPackEntry(true, Gold, 100.00, "5d110+225"),
+					//new LootPackEntry(true, Gold, 100.00, "5d110+225"),
                     new LootPackEntry(false, Instruments, 2.00, 1),
 
                     new LootPackEntry( false, OldMagicItems,      7.50, 1, 1, 5, 35 ),
@@ -509,7 +509,7 @@ namespace Server
 			new LootPack(
 				new[]
 				{
-					new LootPackEntry(true, Gold, 100.00, "10d10+400"),
+					//new LootPackEntry(true, Gold, 100.00, "10d10+400"),
                     new LootPackEntry(false, Instruments, 2.00, 1),
                     new LootPackEntry( false, OldMagicItems,      10.00, 1, 1, 5, 35 ),
                     new LootPackEntry( false, OldMagicItems,      7.50, 1, 1, 5, 55 ),
@@ -524,7 +524,7 @@ namespace Server
 			new LootPack(
 				new[]
 				{
-					new LootPackEntry(true, Gold, 100.00, "25d25+1000"),
+					//new LootPackEntry(true, Gold, 100.00, "25d25+1000"),
                     new LootPackEntry(false, Instruments, 2.00, 1),
 
                 new LootPackEntry( false, OldMagicItems,      10.00 *2, 1, 1, 5, 55 ),
@@ -546,9 +546,13 @@ namespace Server
 		public static LootPack FilthyRich { get { return Core.SE ? SeFilthyRich : Core.AOS ? AosFilthyRich : OldFilthyRich; } }
 		public static LootPack UltraRich { get { return Core.SE ? SeUltraRich : Core.AOS ? AosUltraRich : OldUltraRich; } }
 		public static LootPack SuperBoss { get { return Core.SE ? SeSuperBoss : Core.AOS ? AosSuperBoss : OldSuperBoss; } }
-		#endregion
+        #endregion
 
-		public static readonly LootPack LowScrolls = new LootPack(new[] {new LootPackEntry(false, LowScrollItems, 100.00, 1)});
+        #region divines2.0
+
+        #endregion
+
+        public static readonly LootPack LowScrolls = new LootPack(new[] {new LootPackEntry(false, LowScrollItems, 100.00, 1)});
 
 		public static readonly LootPack MedScrolls = new LootPack(new[] {new LootPackEntry(false, MedScrollItems, 100.00, 1)});
 
@@ -864,7 +868,12 @@ namespace Server
 				{
 					item.Amount = m_Quantity.Roll();
 				}
-			}
+
+                if (item.Stackable && item is Gold)
+                {
+                    item.Amount = m_Quantity.Roll();
+                }
+            }
 
 			return item;
 		}

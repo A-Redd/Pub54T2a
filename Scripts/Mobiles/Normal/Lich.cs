@@ -20,7 +20,7 @@ namespace Server.Mobiles
 
             this.SetHits(103, 120);
 
-            this.SetDamage(24, 26);
+            this.SetDamage(10, 18);
 
             this.SetDamageType(ResistanceType.Physical, 10);
             this.SetDamageType(ResistanceType.Cold, 40);
@@ -35,7 +35,7 @@ namespace Server.Mobiles
             this.SetSkill(SkillName.Necromancy, 89, 99.1);
             this.SetSkill(SkillName.SpiritSpeak, 90.0, 99.0);
 
-            this.SetSkill(SkillName.EvalInt, 100.0);
+            this.SetSkill(SkillName.EvalInt, 50.0);
             this.SetSkill(SkillName.Magery, 70.1, 80.0);
             this.SetSkill(SkillName.Meditation, 85.1, 95.0);
             this.SetSkill(SkillName.MagicResist, 80.1, 100.0);
@@ -44,20 +44,7 @@ namespace Server.Mobiles
             this.Fame = 8000;
             this.Karma = -8000;
 
-            this.VirtualArmor = 50;
-
-			switch (Utility.Random(25))
-            {
-                case 0: PackItem(new LichFormScroll()); break;
-                case 1: PackItem(new PoisonStrikeScroll()); break;
-                case 2: PackItem(new StrangleScroll()); break;
-                case 3: PackItem(new VengefulSpiritScroll()); break;
-				case 4: PackItem(new WitherScroll()); break;
-			}
-
-
-            this.PackItem(new GnarledStaff());
-            this.PackNecroReg(17, 24);
+            this.VirtualArmor = 15;
         }
 
         public Lich(Serial serial)

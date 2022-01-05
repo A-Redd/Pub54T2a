@@ -215,6 +215,7 @@ namespace Server.Mobiles
         private OrderType m_ControlOrder; // My order
 
         private int m_Loyalty;
+        private int Tier = -1;
 
         private double m_dMinTameSkill;
         private bool m_bTamable;
@@ -1270,11 +1271,12 @@ namespace Server.Mobiles
 
         public override void OnBeforeSpawn(Point3D location, Map m)
         {
+
             if (XmlParagon.CheckConvert(this, location, m))
             {
                 IsParagon = true;
             }
-
+            
             base.OnBeforeSpawn(location, m);
         }
 
@@ -2612,6 +2614,215 @@ namespace Server.Mobiles
 
         public virtual void OnActionBackoff()
         { }
+        #endregion
+
+
+        #region abil
+
+        public static double GetDist(Point3D start, Point3D end)
+        {
+            int xdiff = start.X - end.X;
+            int ydiff = start.Y - end.Y;
+            return Math.Sqrt((xdiff * xdiff) + (ydiff * ydiff));
+        }
+
+        public static void IncreaseByDirection(ref Point3D point, Direction d)
+        {
+            switch (d)
+            {
+                case (Direction)0x0:
+                case (Direction)0x80:
+                    point.Y--;
+                    break; //North
+                case (Direction)0x1:
+                case (Direction)0x81:
+                    {
+                        point.X++;
+                        point.Y--;
+                        break;
+                    }//Right
+                case (Direction)0x2:
+                case (Direction)0x82:
+                    point.X++;
+                    break; //East
+                case (Direction)0x3:
+                case (Direction)0x83:
+                    {
+                        point.X++;
+                        point.Y++;
+                        break;
+                    }//Down
+                case (Direction)0x4:
+                case (Direction)0x84:
+                    point.Y++;
+                    break; //South
+                case (Direction)0x5:
+                case (Direction)0x85:
+                    {
+                        point.X--;
+                        point.Y++;
+                        break;
+                    }//Left
+                case (Direction)0x6:
+                case (Direction)0x86:
+                    point.X--;
+                    break; //West
+                case (Direction)0x7:
+                case (Direction)0x87:
+                    {
+                        point.X--;
+                        point.Y--;
+                        break;
+                    }//Up
+                default:
+                    {
+                        break;
+                    }
+            }
+        }       
+
+        public static Point3D RandomCloseLocation(Mobile target)
+        {
+            return RandomCloseLocation(target, 1);
+        }
+
+        public static Point3D RandomCloseLocation(Mobile target, int range)
+        {
+            Point3D point = target.Location;
+            bool canfit = false;
+
+            for (int i = 0; !canfit && i < 10; i++)
+            {
+                point = target.Location;
+                point.X += Utility.RandomMinMax(-range, range);
+                point.Y += Utility.RandomMinMax(-range, range);
+                point.Z = target.Map.GetAverageZ(point.X, point.Y);
+
+                canfit = target.Map.CanFit(point.X, point.Y, point.Z, 16, false, false);
+            }
+
+            return (canfit) ? point : target.Location;
+        }
+
+        public static void SlideAway(Mobile target, Point3D point, int dist)
+        {
+            new SlideTimer(target, point, dist, true).Start();
+        }
+
+        public static void SlideTo(Mobile target, Point3D point, int dist)
+        {
+            new SlideTimer(target, point, dist, false).Start();
+        }
+
+        private class SlideTimer : Timer
+        {
+            private Mobile m_Mob;
+            private Point3D m_Point;
+            private int m_Dist;
+            private bool m_Push;
+            private int m_Count;
+
+            public SlideTimer(Mobile mob, Point3D point, int dist, bool push)
+                : base(TimeSpan.FromMilliseconds(75.0), TimeSpan.FromMilliseconds(75.0))
+            {
+                this.m_Mob = mob;
+                this.m_Point = point;
+                this.m_Dist = dist;
+                this.m_Push = push;
+                this.m_Count = 0;
+
+                this.m_Mob.CantWalk = true;
+            }
+
+            protected override void OnTick()
+            {
+                if (this.m_Mob == null || !this.m_Mob.Alive)
+                {
+                    this.Stop();
+                    return;
+                }
+                else if (this.m_Count >= this.m_Dist )
+                {
+                    this.m_Mob.CantWalk = false;
+                    this.Stop();
+                    return;
+                }
+
+                Direction d = this.m_Mob.GetDirectionTo(this.m_Point);
+                Point3D moveto = new Point3D(this.m_Mob.X, this.m_Mob.Y, this.m_Mob.Z);
+
+                if (this.m_Push)
+                {
+                    switch (d)
+                    {
+                        case (Direction)0x0:
+                        case (Direction)0x80:
+                            d = (Direction)0x4;
+                            break; // North to South
+                        case (Direction)0x1:
+                        case (Direction)0x81:
+                            d = (Direction)0x5;
+                            break; // Right to Left
+                        case (Direction)0x2:
+                        case (Direction)0x82:
+                            d = (Direction)0x6;
+                            break; // East to West
+                        case (Direction)0x3:
+                        case (Direction)0x83:
+                            d = (Direction)0x7;
+                            break; // Down to Up
+                        case (Direction)0x4:
+                        case (Direction)0x84:
+                            d = (Direction)0x0;
+                            break; // South to North
+                        case (Direction)0x5:
+                        case (Direction)0x85:
+                            d = (Direction)0x1;
+                            break; // Left to Right
+                        case (Direction)0x6:
+                        case (Direction)0x86:
+                            d = (Direction)0x2;
+                            break; // West to East
+                        case (Direction)0x7:
+                        case (Direction)0x87:
+                            d = (Direction)0x3;
+                            break; // Up to Down
+                        default:
+                            {
+                                break;
+                            }
+                    }
+                }
+
+                IncreaseByDirection(ref moveto, d);
+                this.m_Mob.Direction = d;
+
+                if (this.m_Mob.Map.CanFit(moveto.X, moveto.Y, this.m_Mob.Map.GetAverageZ(moveto.X, moveto.Y), 16, false, false))
+                    this.m_Mob.Location = moveto;
+
+                this.m_Count++;
+            }
+        }
+
+        public static void Rush(Mobile from)
+        {
+            Rush(from, "", 7);
+        }
+
+        public static void Rush(Mobile from, string text, int duration)
+        {
+            Mobile target = from.Combatant;
+
+            if (target == null )
+                return;
+
+            int dist = from.Str / 20;
+            SlideAway(target, from.Location, (dist > 12) ? 12 : dist);
+
+            if (text != "")
+                target.SendMessage(text);
+        }
+
         #endregion
 
         public override bool OnDragDrop(Mobile from, Item dropped)
@@ -4546,6 +4757,25 @@ namespace Server.Mobiles
             {
                 PackItem(new Gold(amount));
             }
+        }
+
+
+        public void LootTier( int tier)
+        {
+            int dice =tier;
+            int sides =tier+1;
+            int bonus = dice * sides;
+
+            int tierhak = (this.DamageMax / 6 + this.Hits / 250 + this.VirtualArmor / 10 + this.Dex / 25);
+            int hakbonus = tierhak * tierhak + 1;
+
+
+            if (tier == 0)
+                PackGold(Utility.Dice(tierhak, tierhak + 1, hakbonus));
+
+            if (tier > 0)
+                PackGold(Utility.Dice(dice, sides, bonus ));
+
         }
 
         public void PackGold(int min, int max)
