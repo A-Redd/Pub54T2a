@@ -10,7 +10,7 @@ namespace Server.Mobiles
             : base(AIType.AI_Mage, FightMode.Closest, 10, 1, 0.185, 0.3)
         {
             this.Name = "a tentacle terror";
-            this.Body = 66;
+            this.Body = 775;
             this.BaseSoundID = 352;
 
             this.SetStr(400, 400);

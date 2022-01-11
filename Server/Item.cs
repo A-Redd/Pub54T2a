@@ -537,7 +537,11 @@ namespace Server
         /// <summary>
         /// SuperBig Blue Custom <c>LightType.SuperBigBlue</c>.
         /// </summary>
-        Circle375
+        Circle375,
+        /// <summary>
+        /// SuperBig Custom <c>LightType.SuperBig</c>.
+        /// </summary>
+        Circle500
     }
 
 	/// <summary>
