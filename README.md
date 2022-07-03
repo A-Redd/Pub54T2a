@@ -7,7 +7,9 @@ Im a complete programing noob, so much of this is very trial and error, so there
 
 **-Whats been worked on so far so far-**
 
-1. Ascii text for singleclick 90 done% Im having some crashes with this.
-2. Cliloc converted to ascii
-3. Dice weapon damage
+1. Ascii text for singleclick.
+2. Cliloc converted to ascii.
+3. Dice weapon damage.
 4. BaseArmor fix. No more constant 1 damage hits from mobs.
+5. more accurate monster stats for era.
+6. 
