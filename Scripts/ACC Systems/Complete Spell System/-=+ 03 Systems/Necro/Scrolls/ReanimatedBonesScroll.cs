@@ -2,23 +2,23 @@ using System;
 
 namespace Server.ACC.CSS.Systems.Necro
 {
-    public class NecroClingingDarknessScroll : CSpellScroll
+    public class NecroReanimatedBonesScroll : CSpellScroll
     {
         [Constructable]
-        public NecroClingingDarknessScroll()
+        public NecroReanimatedBonesScroll()
             : this(1)
         {
         }
 
         [Constructable]
-        public NecroClingingDarknessScroll(int amount)
-            : base(typeof(NecroClingingDarknessSpell), 0x1F2E, amount)
+        public NecroReanimatedBonesScroll(int amount)
+            : base(typeof(NecroReanimatedBonesSpell), 0x1F2E, amount)
         {
             Name = "Clinging Darkness";
             Hue = 1355;
         }
 
-        public NecroClingingDarknessScroll(Serial serial)
+        public NecroReanimatedBonesScroll(Serial serial)
             : base(serial)
         {
         }

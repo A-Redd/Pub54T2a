@@ -1,0 +1,106 @@
+using System;
+using System.Collections;
+using Server.Targeting;
+using Server.Network;
+using Server.Mobiles;
+using Server.Gumps;
+using Server.Spells;
+
+namespace Server.ACC.CSS.Systems.Necro
+{
+    public class NecroMendBonesSpell : NecroSpell
+    {
+        private static SpellInfo m_Info = new SpellInfo(
+                                                        "Mend Bones", "Mend Bones",
+                                                        //SpellCircle.Eighth,
+                                                        212,
+                                                        9041
+                                                       );
+
+        public override SpellCircle Circle
+        {
+            get { return SpellCircle.Fourth; }
+        }
+
+       // public override int RequiredTithing { get { return 40; } }
+        public override double RequiredSkill { get { return 40.0; } }
+
+        public NecroMendBonesSpell(Mobile caster, Item scroll) : base(caster, scroll, m_Info)
+        {
+        }
+
+        public override void OnCast()
+        {
+            Caster.Target = new InternalTarget(this);
+        }
+
+        public override TimeSpan GetCastDelay()
+        {
+            return TimeSpan.FromSeconds(4.5);
+        }
+
+        public void Target(Mobile m)
+        {
+            double scalar = 2.5;
+
+            if (!Caster.CanSee(m))
+            {
+                Caster.SendLocalizedMessage(500237); // Target can not be seen.
+            }
+            else if (!m.Alive) //new message
+            {
+                Caster.SendLocalizedMessage(501041); // Target is not dead.
+            }
+            else if (!Caster.InRange(m, 4))
+            {
+                Caster.SendLocalizedMessage(501042); // Target is not close enough.
+            }
+            else if (m.Player) //new message
+            {
+                Caster.SendLocalizedMessage(501043); // Target is not a being.
+            }
+            else if (CheckBSequence(m, true))
+            {
+                SpellHelper.Turn(Caster, m);
+
+                m.PlaySound(0x214);
+                m.FixedParticles(0x376A, 1, 62, 0x480, 3, 3, EffectLayer.Waist);
+                m.FixedParticles(0x3779, 1, 46, 9502, 5, 3, EffectLayer.Waist);
+                Caster.Hits - 40;
+                m.Heal(40);
+
+                if (m is BaseCreature && m.Controlled = true && m.ControlMaster = Caster)
+                {
+                    m.Heal(60);
+                }
+            }
+
+            FinishSequence();
+        }
+
+        private class InternalTarget : Target
+        {
+            private NecroMendBonesSpell m_Owner;
+
+            public InternalTarget(NecroMendBonesSpell owner) : base(12, false, TargetFlags.Beneficial)
+            {
+                m_Owner = owner;
+            }
+
+            protected override void OnTarget(Mobile from, object o)
+            {
+                if (o is Mobile)
+                {
+                    m_Owner.Target((Mobile)o);
+                }
+            }
+
+            
+
+            protected override void OnTargetFinish(Mobile from)
+            {
+                m_Owner.FinishSequence();
+            }                        
+        }
+    }
+}

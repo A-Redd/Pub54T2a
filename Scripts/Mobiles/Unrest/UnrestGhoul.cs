@@ -72,7 +72,7 @@ namespace Server.Mobiles
             {
                 defender.FixedEffect(0x37B9, 10, 5);
                 defender.PlaySound(0x5BD);
-                defender.Freeze(TimeSpan.FromSeconds(4.0));
+                defender.Freeze(TimeSpan.FromSeconds(6.0));
                 defender.SendAsciiMessage("your feet are rooted to the ground!");                           
             }
         }

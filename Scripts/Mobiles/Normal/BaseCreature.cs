@@ -1588,8 +1588,8 @@ namespace Server.Mobiles
                 LevelItemManager.CheckItems(from, this);
             }
             #endregion
-
-            this.PrivateOverheadMessage(MessageType.Regular, 438, true, "-" + (amount), from.NetState);
+//divines 2.0
+            this.PrivateOverheadMessage(MessageType.Regular, 1001, true, "-" + (amount), from.NetState);
 
             base.OnDamage(amount, from, willKill);
         }
@@ -3317,24 +3317,24 @@ namespace Server.Mobiles
 
         public virtual void OnGotMeleeAttack(Mobile attacker)
         {
-            if (AutoDispel && attacker is BaseCreature && ((BaseCreature)attacker).IsDispellable &&
-                AutoDispelChance > Utility.RandomDouble())
-            {
-                Dispel(attacker);
-            }
+           // if (AutoDispel && attacker is BaseCreature && ((BaseCreature)attacker).IsDispellable &&
+                //AutoDispelChance > Utility.RandomDouble())
+           // {
+               // Dispel(attacker);
+           // }
 
             if (!m_InRage && CanDoRage)
             {
-                DoRage(attacker);
+               DoRage(attacker);
             }
         }
 
         public virtual void Dispel(Mobile m)
         {
-            Effects.SendLocationParticles(EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration), 0x3728, 8, 20, 5042);
-            Effects.PlaySound(m, m.Map, 0x201);
+            //Effects.SendLocationParticles(EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration), 0x3728, 8, 20, 5042);
+           // Effects.PlaySound(m, m.Map, 0x201);
 
-            m.Delete();
+           // m.Delete();
         }
 
         public virtual bool DeleteOnRelease { get { return m_bSummoned; } }

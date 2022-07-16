@@ -4,18 +4,20 @@ using Server.Network;
 using Server.Items;
 using Server.Targeting;
 using Server.Spells;
+using Server.Mobiles;
 
-namespace Server.ACC.CSS.Systems.Ancient
+namespace Server.ACC.CSS.Systems.Necro
 {
     public class NecroClingingDarknessSpell : NecroSpell
     {
         private static SpellInfo m_Info = new SpellInfo(
-                                                        "Clinging Darkness", "",
+                                                        "Clinging Darkness", "*Clinging Darkness*",
                                                         203,
                                                         9051,
                                                         Reagent.Nightshade,
                                                         Reagent.MandrakeRoot,
                                                         Reagent.Bloodmoss
+                                                        //Reagent.SulfuricAsh
                                                        );
 
         public override SpellCircle Circle
@@ -67,9 +69,9 @@ namespace Server.ACC.CSS.Systems.Ancient
                         m_Table[m] = t;
                     }
 
-                    m.SendMessage("Creeping crud!");
+                    m.SendMessage("Clinging darkness!");
                     m.FixedParticles(0x91B, 1, 240, 9916, 0, 3, EffectLayer.Head);
-                    m.PlaySound(0x230);
+                    m.PlaySound(0x595);
                 }
             }
 
@@ -115,7 +117,7 @@ namespace Server.ACC.CSS.Systems.Ancient
                 return;
 
             t.Stop();
-            m.SendMessage("Creeping crud has fallen off.");
+            m.SendMessage("Clinging darkness has worn off.");
 
             m_Table.Remove(m);
         }
@@ -131,25 +133,27 @@ namespace Server.ACC.CSS.Systems.Ancient
             private int m_Count, m_MaxCount;
 
             public InternalTimer(Mobile target, Mobile from)
-                : base(TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(0.1))
+                : base(TimeSpan.FromSeconds(4.0), TimeSpan.FromSeconds(4.0))
             {
                 Priority = TimerPriority.FiftyMS;
 
                 m_Target = target;
                 m_From = from;
 
-                double timeLevel = from.Skills[SkillName.EvalInt].Value / 10;
+                double eval = from.Skills[SkillName.EvalInt].Value / 50;
+                double foren = from.Skills[SkillName.Forensics].Value / 75;
 
-                m_MinBaseDamage = timeLevel - 2;
-                m_MaxBaseDamage = timeLevel + 1;
+                m_MinBaseDamage = 4 * (eval + foren +1);
+                m_MaxBaseDamage = 8 * (eval + foren +1);
 
-                m_HitDelay = 5;
+                m_HitDelay = 5;    
                 m_NextHit = DateTime.Now + TimeSpan.FromSeconds(m_HitDelay);
 
-                m_Count = (int)timeLevel;
+                m_Count += (int)(from.Skills[SkillName.EvalInt].Value / 20);
+                m_Count += (int)(from.Skills[SkillName.Forensics].Value / 20);
 
-                if (m_Count < 4)
-                    m_Count = 4;
+                if (m_Count < 5)
+                    m_Count = 5;
 
                 m_MaxCount = m_Count;
             }
@@ -170,7 +174,7 @@ namespace Server.ACC.CSS.Systems.Ancient
                 if (m_HitDelay > 1)
                 {
                     m_Target.FixedParticles(0x91B, 1, 240, 9916, 1159, 3, EffectLayer.Head);
-                    m_Target.PlaySound(0x230);
+                    m_Target.PlaySound(0x595);
                     if (m_MaxCount < 5)
                     {
                         --m_HitDelay;
@@ -185,37 +189,42 @@ namespace Server.ACC.CSS.Systems.Ancient
                             m_HitDelay = 5;
                     }
                 }
+      
+                if (m_Count == 2)
+                {
+                    m_From.SendMessage("Your Clinging Darkeness spell is about to wear off!.");
+                }
 
                 if (m_Count == 0)
                 {
-                    m_Target.SendMessage("Creeping Crud has fallen off..");
+                    m_Target.SendMessage("Clinging Darkness has fallen off..");
                     m_Table.Remove(m_Target);
                     Stop();
                 }
-                else
+            
                 {
                     m_NextHit = DateTime.Now + TimeSpan.FromSeconds(m_HitDelay);
 
-                    double damage = m_MinBaseDamage + (Utility.RandomDouble() * (m_MaxBaseDamage - m_MinBaseDamage));
-
-                    damage *= (3 - (((double)m_Target.Stam / m_Target.StamMax) * 2));
+                    double damage = m_MinBaseDamage + (Utility.RandomDouble() * (m_MaxBaseDamage - m_MinBaseDamage));                    
 
                     if (damage < 1)
                         damage = 1;
-
-                    if (!m_Target.Player)
-                        damage *= 1.75;
 
                     AOS.Damage(m_Target, m_From, (int)damage, 0, 0, 0, 100, 0);
                 }
             }
         }
 
+        public override TimeSpan GetCastDelay()
+        {
+            return TimeSpan.FromSeconds(2.5);
+        }
+
         private class InternalTarget : Target
         {
-            private AncientSwarmSpell m_Owner;
+            private NecroClingingDarknessSpell m_Owner;
 
-            public InternalTarget(AncientSwarmSpell owner)
+            public InternalTarget(NecroClingingDarknessSpell owner)
                 : base(12, false, TargetFlags.Harmful)
             {
                 m_Owner = owner;

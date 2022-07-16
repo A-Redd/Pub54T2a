@@ -2,11 +2,11 @@ using System;
 using Server;
 using Server.Spells;
 
-namespace Server.ACC.CSS.Systems.Necro
+namespace Server.ACC.CSS.Systems.Ancient
 {
-	public abstract class NecroSpell : CSpell
+	public abstract class AncientSpell : CSpell
 	{
-		public NecroSpell( Mobile caster, Item scroll, SpellInfo info ) : base( caster, scroll, info )
+		public AncientSpell( Mobile caster, Item scroll, SpellInfo info ) : base( caster, scroll, info )
 		{
 		}
         

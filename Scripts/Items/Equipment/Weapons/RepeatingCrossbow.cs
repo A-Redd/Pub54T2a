@@ -52,6 +52,9 @@ namespace Server.Items
                 return WeaponAbility.MovingShot;
             }
         }
+        public override int NumDice { get { return 2; } }
+        public override int DiceSides { get { return 14; } }
+        public override int Offset { get { return 0; } }
         public override int AosStrengthReq
         {
             get
@@ -112,7 +115,7 @@ namespace Server.Items
         {
             get
             {
-                return 41;
+                return 45;
             }
         }
         public override int DefMaxRange

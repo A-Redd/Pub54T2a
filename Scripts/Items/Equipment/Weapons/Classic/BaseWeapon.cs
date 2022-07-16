@@ -3259,8 +3259,9 @@ namespace Server.Items
                     if (critdam > 0)
                     {
                         pm.SendMessage("You score critical strike!");
+                        pm.PlaySound(0x525);
                         modifiers += (critdam / 100 );
-                        //Console.WriteLine("Crit did {0}% extra damage", y);
+                       // Console.WriteLine("Critical Strike!", y);
                         //pm.Combatant.Freeze(TimeSpan.FromSeconds(3.0));
                     }
                 }

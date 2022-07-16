@@ -4,10 +4,10 @@ using Server.Items;
 namespace Server.Mobiles
 {
     [CorpseName("a festering corpse")]
-    public class UnrestHag : BaseCreature
+    public class Hag : BaseCreature
     {
         [Constructable]
-        public UnrestHag()
+        public Hag()
             : base(AIType.AI_Mage, FightMode.Closest, 10, 1, 0.18, 0.3)
         {
             this.Name = "a festering hag";
@@ -38,7 +38,7 @@ namespace Server.Mobiles
             this.VirtualArmor = 20;
         }
 
-        public UnrestHag(Serial serial)
+        public Hag(Serial serial)
             : base(serial)
         {
         }

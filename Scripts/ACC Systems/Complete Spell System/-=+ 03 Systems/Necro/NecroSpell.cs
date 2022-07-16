@@ -2,19 +2,22 @@ using System;
 using Server;
 using Server.Spells;
 
-namespace Server.ACC.CSS.Systems.Ancient
+namespace Server.ACC.CSS.Systems.Necro
 {
-	public abstract class AncientSpell : CSpell
+	public abstract class NecroSpell : CSpell
 	{
-		public AncientSpell( Mobile caster, Item scroll, SpellInfo info ) : base( caster, scroll, info )
+		public NecroSpell( Mobile caster, Item scroll, SpellInfo info ) : base( caster, scroll, info )
 		{
 		}
         
         public abstract SpellCircle Circle { get; }
         
         public override TimeSpan CastDelayBase { get { return TimeSpan.FromSeconds(3 * CastDelaySecondsPerTick); } }
-        public override SkillName CastSkill { get { return SkillName.Magery; } }
+        public override SkillName CastSkill { get { return SkillName.Necromancy; } }
         public override SkillName DamageSkill { get { return SkillName.EvalInt; } }
+        public virtual SkillName SupportSkill { get { return SkillName.SpiritSpeak; } }
+        public virtual SkillName MultiSkill { get { return SkillName.Forensics; } }
+        public virtual SkillName HealSkill { get { return SkillName.Anatomy; } }
 
         public override bool ClearHandsOnCast { get { return true; } }
 

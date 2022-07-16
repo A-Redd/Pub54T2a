@@ -45,8 +45,9 @@ namespace Server.Spells
 
 		public virtual SkillName CastSkill { get { return SkillName.Magery; } }
 		public virtual SkillName DamageSkill { get { return SkillName.EvalInt; } }
+        public virtual SkillName SupportSkill { get { return SkillName.SpiritSpeak; } }
 
-		public virtual bool RevealOnCast { get { return true; } }
+        public virtual bool RevealOnCast { get { return true; } }
 		public virtual bool ClearHandsOnCast { get { return true; } }
 		public virtual bool ShowHandMovement { get { return true; } }
 
