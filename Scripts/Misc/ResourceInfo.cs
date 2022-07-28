@@ -15,6 +15,9 @@ namespace Server.Items
         Agapite,
         Verite,
         Valorite,
+        Crimson,
+        TrueSilver,
+        
 
         RegularLeather = 101,
         SpinedLeather,
@@ -511,7 +514,7 @@ namespace Server.Items
         }
 
         public static readonly CraftAttributeInfo Blank;
-        public static readonly CraftAttributeInfo DullCopper, ShadowIron, Copper, Bronze, Golden, Agapite, Verite, Valorite;
+        public static readonly CraftAttributeInfo DullCopper, ShadowIron, Copper, Bronze, Golden, Agapite, Verite, Valorite, Crimson, TrueSilver;
         public static readonly CraftAttributeInfo Spined, Horned, Barbed;
         public static readonly CraftAttributeInfo RedScales, YellowScales, BlackScales, GreenScales, WhiteScales, BlueScales;
         public static readonly CraftAttributeInfo OakWood, AshWood, YewWood, Heartwood, Bloodwood, Frostwood;
@@ -983,6 +986,8 @@ namespace Server.Items
             new CraftResourceInfo(0x979, 1053103, "Agapite", CraftAttributeInfo.Agapite, CraftResource.Agapite, typeof(AgapiteIngot), typeof(AgapiteOre), typeof(AgapiteGranite)),
             new CraftResourceInfo(0x89F, 1053102, "Verite", CraftAttributeInfo.Verite, CraftResource.Verite, typeof(VeriteIngot), typeof(VeriteOre), typeof(VeriteGranite)),
             new CraftResourceInfo(0x8AB, 1053101, "Valorite", CraftAttributeInfo.Valorite,	CraftResource.Valorite, typeof(ValoriteIngot),	typeof(ValoriteOre), typeof(ValoriteGranite)),
+            new CraftResourceInfo(0x8AB, 1053101, "Crimson", CraftAttributeInfo.Crimson,  CraftResource.Crimson, typeof(CrimsonIngot),  typeof(CrimsonOre)),
+            new CraftResourceInfo(0x8AB, 1053101, "True Silver", CraftAttributeInfo.TrueSilver,  CraftResource.TrueSilver, typeof(TrueSilverIngot), typeof(TrueSilverOre)),
         };
 
         private static readonly CraftResourceInfo[] m_ScaleInfo = new CraftResourceInfo[]
@@ -1098,7 +1103,7 @@ namespace Server.Items
         /// </summary>
         public static CraftResourceType GetType(CraftResource resource)
         {
-            if (resource >= CraftResource.Iron && resource <= CraftResource.Valorite)
+            if (resource >= CraftResource.Iron && resource <= CraftResource.TrueSilver)
                 return CraftResourceType.Metal;
 
             if (resource >= CraftResource.RegularLeather && resource <= CraftResource.BarbedLeather)
@@ -1208,6 +1213,10 @@ namespace Server.Items
                 return CraftResource.Verite;
             else if (info.Level == 8)
                 return CraftResource.Valorite;
+            else if (info.Level == 9)
+                return CraftResource.Crimson;
+            else if (info.Level == 10)
+                return CraftResource.TrueSilver;
 
             return CraftResource.None;
         }
@@ -1249,6 +1258,8 @@ namespace Server.Items
         public static readonly OreInfo Agapite = new OreInfo(6, 0x979, "Agapite");
         public static readonly OreInfo Verite = new OreInfo(7, 0x89F, "Verite");
         public static readonly OreInfo Valorite = new OreInfo(8, 0x8AB, "Valorite");
+        public static readonly OreInfo Crimson = new OreInfo(9, 0x4C4, "Crimson");
+        public static readonly OreInfo TrueSilver = new OreInfo(10, 0x8AB, "True Silver");
 
         private readonly int m_Level;
         private readonly int m_Hue;

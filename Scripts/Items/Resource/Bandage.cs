@@ -489,9 +489,11 @@ namespace Server.Items
 						toHeal = 1;
 						healerNumber = 500968; // You apply the bandages, but they barely help.
 					}
+                    Mobile pat = m_Patient as Mobile;
+                    pat.Heal((int)toHeal, m_Healer, false);
 
-					m_Patient.Heal((int)toHeal, m_Healer, false);
-				}
+                    //pat.PrivateOverheadMessage(MessageType.Regular, 95, true, "+" + (toHeal), m_Healer.NetState);
+                }
 				else
 				{
 					healerNumber = 500968; // You apply the bandages, but they barely help.

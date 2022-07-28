@@ -86,6 +86,13 @@ namespace Server.Items
                             case 8:
                                 info = OreInfo.Valorite;
                                 break;
+                            case 9:
+                                info = OreInfo.Crimson;
+                                break;
+                            case 10:
+                                info = OreInfo.TrueSilver
+                                ;
+                                break;
                             default:
                                 info = null;
                                 break;
@@ -329,28 +336,34 @@ namespace Server.Items
                             difficulty = 50.0;
                             break;
                         case CraftResource.DullCopper:
-                            difficulty = 65.0;
+                            difficulty = 55.0;
                             break;
                         case CraftResource.ShadowIron:
-                            difficulty = 70.0;
+                            difficulty = 60.0;
                             break;
                         case CraftResource.Copper:
-                            difficulty = 75.0;
+                            difficulty = 65.0;
                             break;
                         case CraftResource.Bronze:
-                            difficulty = 80.0;
+                            difficulty = 70.0;
                             break;
                         case CraftResource.Gold:
-                            difficulty = 85.0;
+                            difficulty = 75.0;
                             break;
                         case CraftResource.Agapite:
-                            difficulty = 90.0;
+                            difficulty = 80.0;
                             break;
                         case CraftResource.Verite:
-                            difficulty = 95.0;
+                            difficulty = 85.0;
                             break;
                         case CraftResource.Valorite:
-                            difficulty = 99.0;
+                            difficulty = 95.0;
+                            break;
+                        case CraftResource.Crimson:
+                            difficulty = 105.0;
+                            break;
+                        case CraftResource.TrueSilver:
+                            difficulty = 110.0;
                             break;
                     }
 
@@ -808,6 +821,87 @@ namespace Server.Items
         public override BaseIngot GetIngot()
         {
             return new ValoriteIngot();
+        }
+    }
+    public class CrimsonOre : BaseOre
+    {
+        protected override CraftResource DefaultResource { get { return CraftResource.Crimson; } }
+
+        [Constructable]
+        public CrimsonOre()
+            : this(1)
+        {
+        }
+
+        [Constructable]
+        public CrimsonOre(int amount)
+            : base(CraftResource.Crimson, amount)
+        {
+        }
+
+        public CrimsonOre(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+        }
+
+        public override BaseIngot GetIngot()
+        {
+            return new CrimsonIngot();
+        }
+    }
+
+    public class TrueSilverOre : BaseOre
+    {
+        protected override CraftResource DefaultResource { get { return CraftResource.TrueSilver; } }
+
+        [Constructable]
+        public TrueSilverOre()
+            : this(1)
+        {
+        }
+
+        [Constructable]
+        public TrueSilverOre(int amount)
+            : base(CraftResource.TrueSilver, amount)
+        {
+        }
+
+        public TrueSilverOre(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+        }
+
+        public override BaseIngot GetIngot()
+        {
+            return new TrueSilverIngot();
         }
     }
 }

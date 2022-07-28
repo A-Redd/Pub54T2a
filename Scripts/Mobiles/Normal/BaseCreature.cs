@@ -1590,8 +1590,6 @@ namespace Server.Mobiles
             #endregion
 //divines 2.0
             this.PrivateOverheadMessage(MessageType.Regular, 1001, true, "-" + (amount), from.NetState);
-
-            base.OnDamage(amount, from, willKill);
         }
 
         public virtual void OnDamagedBySpell(Mobile from)
@@ -6275,7 +6273,14 @@ namespace Server.Mobiles
 
                     toHeal *= HealScalar;
 
+                    patient.PrivateOverheadMessage(MessageType.Regular, 25, true, "+" + (toHeal), patient.NetState);
+
+                    if (onSelf)
+                    {
+                        this.PrivateOverheadMessage(MessageType.Regular, 25, true, "+" + (toHeal), this.NetState);
+                    }
                     patient.Heal((int)toHeal);
+                   
 
                     CheckSkill(SkillName.Healing, 0.0, 90.0);
                     CheckSkill(SkillName.Anatomy, 0.0, 100.0);

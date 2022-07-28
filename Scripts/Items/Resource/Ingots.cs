@@ -138,6 +138,12 @@ namespace Server.Items
                             case 8:
                                 info = OreInfo.Valorite;
                                 break;
+                            case 9:
+                                info = OreInfo.Crimson;
+                                break;
+                            case 10:
+                                info = OreInfo.TrueSilver;
+                                break;
                             default:
                                 info = null;
                                 break;
@@ -485,6 +491,79 @@ namespace Server.Items
         }
 
         public ValoriteIngot(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+        }
+    }
+    [FlipableAttribute(0x1BF2, 0x1BEF)]
+    public class CrimsonIngot : BaseIngot
+    {
+        protected override CraftResource DefaultResource { get { return CraftResource.Crimson; } }
+
+        [Constructable]
+        public CrimsonIngot()
+            : this(1)
+        {
+        }
+
+        [Constructable]
+        public CrimsonIngot(int amount)
+            : base(CraftResource.Crimson, amount)
+        {
+        }
+
+        public CrimsonIngot(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+        }
+    }
+
+    [FlipableAttribute(0x1BF2, 0x1BEF)]
+    public class TrueSilverIngot : BaseIngot
+    {
+        protected override CraftResource DefaultResource { get { return CraftResource.TrueSilver; } }
+
+        [Constructable]
+        public TrueSilverIngot()
+            : this(1)
+        {
+        }
+
+        [Constructable]
+        public TrueSilverIngot(int amount)
+            : base(CraftResource.TrueSilver, amount)
+        {
+        }
+
+        public TrueSilverIngot(Serial serial)
             : base(serial)
         {
         }

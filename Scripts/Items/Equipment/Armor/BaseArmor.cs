@@ -425,7 +425,7 @@ namespace Server.Items
                         break;
                 }
 
-                return ar;
+                return ar *2;
             }
         }
 
@@ -2482,7 +2482,7 @@ namespace Server.Items
         public virtual int OnHit(BaseWeapon weapon, int damageTaken)
         {
 
-            damageTaken -= Utility.RandomMinMax((int)BaseArmorRatingScaled / 2, (int)BaseArmorRatingScaled) / 2;
+            damageTaken -= Utility.RandomMinMax( 33 * (int)BaseArmorRatingScaled /100, 66 * (int)BaseArmorRatingScaled) /100;
 
             if (Utility.Random(5) == 0)
                 HitPoints--;
