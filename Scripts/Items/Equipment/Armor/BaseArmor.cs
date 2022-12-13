@@ -371,7 +371,7 @@ namespace Server.Items
         {
             get
             {
-                return (this.UnscaledArmorRating * this.ArmorScalar);
+                return (this.UnscaledArmorRating);
             }
         }      
 
@@ -413,6 +413,12 @@ namespace Server.Items
                         break;
                     case CraftResource.Valorite:
                         ar += 8;
+                        break;
+                    case CraftResource.Crimson:
+                        ar += 9;
+                        break;
+                    case CraftResource.TrueSilver:
+                        ar += 10;
                         break;
                     case CraftResource.SpinedLeather:
                         ar += 2;
@@ -463,6 +469,12 @@ namespace Server.Items
                         break;
                     case CraftResource.Valorite:
                         ar += 16;
+                        break;
+                    case CraftResource.Crimson:
+                        ar += 18;
+                        break;
+                    case CraftResource.TrueSilver:
+                        ar += 20;
                         break;
                     case CraftResource.SpinedLeather:
                         ar += 10;
@@ -2481,9 +2493,7 @@ namespace Server.Items
 
         public virtual int OnHit(BaseWeapon weapon, int damageTaken)
         {
-
-            damageTaken -= Utility.RandomMinMax( 33 * (int)BaseArmorRatingScaled /100, 66 * (int)BaseArmorRatingScaled) /100;
-
+            
             if (Utility.Random(5) == 0)
                 HitPoints--;
 

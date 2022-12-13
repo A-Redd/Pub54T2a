@@ -34,7 +34,7 @@ namespace Server.Mobiles
 
             LootTier(16);
 
-            VirtualArmor = Utility.RandomMinMax(18, 33);
+            VirtualArmor = 125;
         }
 
         public Balron(Serial serial)

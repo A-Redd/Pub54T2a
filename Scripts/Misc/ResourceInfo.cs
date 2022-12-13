@@ -696,6 +696,54 @@ namespace Server.Items
                 valorite.RunicMaxIntensity = 100;
             }
 
+            CraftAttributeInfo crimson = Crimson= new CraftAttributeInfo();
+
+            crimson.ArmorPhysicalResist = 5;
+            crimson.ArmorColdResist = 4;
+            crimson.ArmorPoisonResist = 4;
+            crimson.ArmorEnergyResist = 4;
+            crimson.ArmorDurability = 50;
+            crimson.WeaponFireDamage = 10;
+            crimson.WeaponColdDamage = 20;
+            crimson.WeaponPoisonDamage = 10;
+            crimson.WeaponEnergyDamage = 20;
+            crimson.RunicMinAttributes = 5;
+            crimson.RunicMaxAttributes = 6;
+            if (Core.ML)
+            {
+                crimson.RunicMinIntensity = 90;
+                crimson.RunicMaxIntensity = 100;
+            }
+            else
+            {
+                crimson.RunicMinIntensity = 50;
+                crimson.RunicMaxIntensity = 100;
+            }
+
+            CraftAttributeInfo truesilver= TrueSilver = new CraftAttributeInfo();
+
+            truesilver.ArmorPhysicalResist = 5;
+            truesilver.ArmorColdResist = 4;
+            truesilver.ArmorPoisonResist = 4;
+            truesilver.ArmorEnergyResist = 4;
+            truesilver.ArmorDurability = 50;
+            truesilver.WeaponFireDamage = 10;
+            truesilver.WeaponColdDamage = 20;
+            truesilver.WeaponPoisonDamage = 10;
+            truesilver.WeaponEnergyDamage = 20;
+            truesilver.RunicMinAttributes = 6;
+            truesilver.RunicMaxAttributes = 6;
+            if (Core.ML)
+            {
+                truesilver.RunicMinIntensity = 95;
+                truesilver.RunicMaxIntensity = 100;
+            }
+            else
+            {
+                truesilver.RunicMinIntensity = 50;
+                truesilver.RunicMaxIntensity = 100;
+            }
+
             CraftAttributeInfo spined = Spined = new CraftAttributeInfo();
 
             spined.ArmorPhysicalResist = 9;
@@ -986,7 +1034,7 @@ namespace Server.Items
             new CraftResourceInfo(0x979, 1053103, "Agapite", CraftAttributeInfo.Agapite, CraftResource.Agapite, typeof(AgapiteIngot), typeof(AgapiteOre), typeof(AgapiteGranite)),
             new CraftResourceInfo(0x89F, 1053102, "Verite", CraftAttributeInfo.Verite, CraftResource.Verite, typeof(VeriteIngot), typeof(VeriteOre), typeof(VeriteGranite)),
             new CraftResourceInfo(0x8AB, 1053101, "Valorite", CraftAttributeInfo.Valorite,	CraftResource.Valorite, typeof(ValoriteIngot),	typeof(ValoriteOre), typeof(ValoriteGranite)),
-            new CraftResourceInfo(0x8AB, 1053101, "Crimson", CraftAttributeInfo.Crimson,  CraftResource.Crimson, typeof(CrimsonIngot),  typeof(CrimsonOre)),
+            new CraftResourceInfo(0x4C4, 1053101, "Crimson", CraftAttributeInfo.Crimson,  CraftResource.Crimson, typeof(CrimsonIngot),  typeof(CrimsonOre)),
             new CraftResourceInfo(0x8AB, 1053101, "True Silver", CraftAttributeInfo.TrueSilver,  CraftResource.TrueSilver, typeof(TrueSilverIngot), typeof(TrueSilverOre)),
         };
 

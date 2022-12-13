@@ -113,7 +113,7 @@ namespace Server.Items
         {
             get
             {
-                return Race.Gargoyle;
+                return Race.Human;
             }
         }
         public override bool CanBeWornByGargoyles

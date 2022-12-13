@@ -1722,7 +1722,7 @@ namespace Server.Items
         {
             double chance = Utility.RandomDouble();
             BaseArmor armor;
-
+        
             if (chance < 0.07)
                 armor = defender.NeckArmor as BaseArmor;
             else if (chance < 0.14)
@@ -1736,16 +1736,14 @@ namespace Server.Items
             else
                 armor = defender.ChestArmor as BaseArmor;
 
+            //int totalarmor = Mobile.ArmorRating;
+
             BaseShield shield = defender.FindItemOnLayer(Layer.TwoHanded) as BaseShield;
             if (shield != null)
                 damage = shield.OnHit(this, damage);
 
             if (armor != null)
                 damage = armor.OnHit(this, damage);
-
-            int virtualArmor = (defender.VirtualArmor + defender.VirtualArmorMod);
-            if (virtualArmor > 0)
-                damage -= Utility.RandomMinMax(virtualArmor / 4, virtualArmor) / 4;             
 
             damage -= XmlAttach.OnArmorHit(attacker, defender, armor, this, damage);
 			damage -= XmlAttach.OnArmorHit(attacker, defender, shield, this, damage);
@@ -2876,7 +2874,7 @@ namespace Server.Items
 			{
 				new Blood().MoveToWorld(defender.Location, defender.Map);
 
-				int extraBlood = (Core.SE ? Utility.RandomMinMax(3, 4) : Utility.RandomMinMax(0, 1));
+				int extraBlood = (Utility.RandomMinMax(3, 4));
 
 				for (int i = 0; i < extraBlood; i++)
 				{
@@ -3003,13 +3001,14 @@ namespace Server.Items
 					max = c.DamageMax;
 					return;
 				}
-
+                /*
 				if (this is Fists && !attacker.Body.IsHuman)
 				{
-					min = attacker.Str / 28;
-					max = attacker.Str / 28;
+                    min = attacker.Str /20;
+                    max = attacker.Str /20;
 					return;
 				}
+                */
 			}
 
 
@@ -3022,7 +3021,7 @@ namespace Server.Items
 			int min, max;
             int damage = 0;
 
-            if (this.NumDice <= 0 || m_MinDamage != -1)// (attacker is BaseCreature)
+            if ((attacker is BaseCreature))
             {
                 GetBaseDamageRange(attacker, out min, out max);
                 damage = Utility.RandomMinMax(min, max);
@@ -3062,10 +3061,6 @@ namespace Server.Items
 
 		public virtual int GetHitChanceBonus()
 		{
-			if (!Core.AOS)
-			{
-				return 0;
-			}
 
 			int bonus = 0;
 
@@ -3088,7 +3083,7 @@ namespace Server.Items
 					break;
 			}
 
-			return bonus;
+			return bonus *2;
 		}
 
 		public virtual int GetDamageBonus()
@@ -3105,29 +3100,29 @@ namespace Server.Items
 				switch (m_Quality)
 				{
 					case WeaponQuality.Low:
-						bonus -= 20;
+						bonus -= 10;
 						break;
 					case WeaponQuality.Exceptional:
-						bonus += 20;
+						bonus += 10;
 						break;
 				}
 
 				switch (m_DamageLevel)
 				{
 					case WeaponDamageLevel.Ruin:
-						bonus += 15;
+						bonus += 10;
 						break;
 					case WeaponDamageLevel.Might:
-						bonus += 20;
+						bonus += 15;
 						break;
 					case WeaponDamageLevel.Force:
-						bonus += 25;
+						bonus += 20;
 						break;
 					case WeaponDamageLevel.Power:
-						bonus += 30;
+						bonus += 25;
 						break;
 					case WeaponDamageLevel.Vanq:
-						bonus += 35;
+						bonus += 30;
 						break;
 				}
 			}
@@ -3161,11 +3156,6 @@ namespace Server.Items
 					// Passively check tactics for gain
 				attacker.CheckSkill(SkillName.Anatomy, 0.0, attacker.Skills[SkillName.Anatomy].Cap);
 					// Passively check Anatomy for gain
-
-				if (Type == WeaponType.Axe)
-				{
-					attacker.CheckSkill(SkillName.Lumberjacking, 0.0, 100.0); // Passively check Lumberjacking for gain
-				}
 			}
 
 			#region Physical bonuses
@@ -3218,11 +3208,6 @@ namespace Server.Items
 					// Passively check tactics for gain
 				attacker.CheckSkill(SkillName.Anatomy, 0.0, attacker.Skills[SkillName.Anatomy].Cap);
 					// Passively check Anatomy for gain
-
-				//if (Type == WeaponType.Axe)
-				//{
-					//attacker.CheckSkill(SkillName.Lumberjacking, 0.0, 100.0); // Passively check Lumberjacking for gain //divines 2.0
-				//}
 			}
 
 			/* Compute tactics modifier
@@ -3271,7 +3256,7 @@ namespace Server.Items
             * : 1% bonus for every 5 points of lumberjacking
             * : +10% bonus at Grandmaster or higher
             */
-            /*
+            
 			if (Type == WeaponType.Axe)
 			{
 				double lumberValue = attacker.Skills[SkillName.Lumberjacking].Value; //divines 2.0 
@@ -3285,8 +3270,48 @@ namespace Server.Items
 				{
 					modifiers += 0.1;
 				}
-			}
+
+                if (lumberValue >= 110.0)
+                {
+                    modifiers += 0.1;
+                }
+
+                if (lumberValue >= 120.0)
+                {
+                    modifiers += 0.1;
+                }
+            }
+
+            /* Compute Mining bonus
+            * : 1% bonus for every 5 points of lumberjacking
+            * : +10% bonus at Grandmaster or higher
             */
+
+            if (Type == WeaponType.Bashing || Type == WeaponType.Staff)
+            {
+                double miningValue = attacker.Skills[SkillName.Mining].Value; //divines 2.0 
+                miningValue = (miningValue / 5.0) / 100.0;
+                if (miningValue > 0.2)
+                    miningValue = 0.2;
+
+                modifiers += miningValue;
+
+                if (miningValue >= 100.0)
+                {
+                    modifiers += 0.1;
+                }
+
+                if (miningValue >= 110.0)
+                {
+                    modifiers += 0.1;
+                }
+
+                if (miningValue >= 120.0)
+                {
+                    modifiers += 0.1;
+                }
+            }
+
             // New quality bonus:
             if (m_Quality != WeaponQuality.Regular)
 			{
@@ -3302,7 +3327,7 @@ namespace Server.Items
             // Apply bonuses
             damage += (damage * modifiers);
 
-			return ScaleDamageByDurability((int)damage);
+            return (int)damage;//return ScaleDamageByDurability((int)damage);
 		}
 
 		public virtual int ScaleDamageByDurability(int damage)
@@ -3328,20 +3353,38 @@ namespace Server.Items
 
             if (defender is BaseCreature && attacker is BaseCreature) //divines 2.0
             {
-                damage *= 2;
+                
+            }
+
+            if (defender is BaseCreature ) //divines 2.0
+            {
+                BaseCreature bc = (BaseCreature)defender;
+                double min = bc.VirtualArmor * 0.333;
+                double max = bc.VirtualArmor * 0.666;
+                double mod = (Utility.RandomMinMax( (int)min, (int)max) );
+                attacker.SendMessage(80, "armor reduced damage of {0} by {1}",damage,mod );
+                attacker.SendMessage(70, "armor roll = {0}",mod);
+                damage -= AOS.Scale(damage, (int)mod);
             }
             // pre-AOS, halve damage if the defender is a player or the attacker is not a player
-            if (defender is PlayerMobile && attacker is BaseCreature)
+            if (defender is PlayerMobile)
             {
-                PlayerMobile pm = (PlayerMobile)defender;
+				
+				PlayerMobile pm = (PlayerMobile)defender;
                 if ((pm.Toughness) > 0 && damage > 0)
                 {
                     double toughness = pm.Toughness;
-                   int y = Convert.ToInt32( toughness);
+                    int y = Convert.ToInt32( toughness);
 
-                    damage -= AOS.Scale(damage, y);
-                }
+                    double min =  y * .333;
+                    double max =  y * .666;
+                    int damagemod = damage * Utility.RandomMinMax((int)min, (int)max) / 100;
+                    int newdamage = damage - damagemod;
+                    defender.SendMessage(40,"armor reduced damage of {0} by {1} for a total of {2}", damage, damagemod, newdamage );
+                    damage = newdamage; //damage -= AOS.Scale(damage, y);                   
+               }
             }
+
             return damage;
 		}
 
