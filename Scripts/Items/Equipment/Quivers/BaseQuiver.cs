@@ -41,6 +41,7 @@ namespace Server.Items
         private AosAttributes m_Attributes;
         private AosSkillBonuses m_AosSkillBonuses;
         private AosElementAttributes m_Resistances;
+        private CraftResource m_Resource;
         private int m_Capacity;
         //private int m_LowerAmmoCost;
         private int m_WeightReduction;
@@ -191,6 +192,17 @@ namespace Server.Items
             get
             {
                 return this.Items.Count > 0 ? this.Items[0] : null;
+            }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public CraftResource Resource
+        {
+            get { return m_Resource; }
+            set
+            {               
+                m_Resource = value;
+                Hue = CraftResources.GetHue(m_Resource);
             }
         }
 
@@ -591,7 +603,8 @@ namespace Server.Items
             SetSkillAttributes = 0x00002000,
             #endregion
 
-            DamageIncrease = 0x00000080
+            DamageIncrease = 0x00000080,
+            Resource = 0x00004000
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -611,6 +624,9 @@ namespace Server.Items
 
             SaveFlag flags = SaveFlag.None;
 
+            //version4
+            SetSaveFlag(ref flags, SaveFlag.Resource, m_Resource != CraftResource.RegularLeather);
+
             // Version 2
             writer.Write(IsArrowAmmo);
 
@@ -619,7 +635,6 @@ namespace Server.Items
             m_Resistances.Serialize(writer);
 
             SetSaveFlag(ref flags, SaveFlag.Attributes, !this.m_Attributes.IsEmpty);
-            //SetSaveFlag(ref flags, SaveFlag.LowerAmmoCost, this.m_LowerAmmoCost != 0);
             SetSaveFlag(ref flags, SaveFlag.WeightReduction, this.m_WeightReduction != 0);
             SetSaveFlag(ref flags, SaveFlag.DamageIncrease, this.m_DamageIncrease != 0);
             SetSaveFlag(ref flags, SaveFlag.Crafter, this.m_Crafter != null);
@@ -636,8 +651,15 @@ namespace Server.Items
 
             writer.WriteEncodedInt((int)flags);
 
+
+
             if (GetSaveFlag(flags, SaveFlag.Attributes))
                 this.m_Attributes.Serialize(writer);
+
+            if (GetSaveFlag(flags, SaveFlag.Resource))
+			{
+				writer.Write((int)m_Resource);
+			}
 
             //if (GetSaveFlag(flags, SaveFlag.LowerAmmoCost))
             //    writer.Write((int)this.m_LowerAmmoCost);
@@ -684,6 +706,7 @@ namespace Server.Items
             switch (version)
             {
                 case 3:
+
                 case 2:
                     IsArrowAmmo = reader.ReadBool();
                     goto case 1;
@@ -706,6 +729,16 @@ namespace Server.Items
                         }
 
                         SaveFlag flags = (SaveFlag)reader.ReadEncodedInt();
+
+                         if (GetSaveFlag(flags, SaveFlag.Resource))
+						{
+							m_Resource = (CraftResource)reader.ReadInt();
+						}
+						else
+						{
+							m_Resource = CraftResource.RegularLeather;
+						}
+
 
                         if (GetSaveFlag(flags, SaveFlag.Attributes))
                             this.m_Attributes = new AosAttributes(this, reader);

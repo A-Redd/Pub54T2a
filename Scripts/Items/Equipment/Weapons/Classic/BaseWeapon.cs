@@ -3028,7 +3028,8 @@ namespace Server.Items
             }
             else
            {
-                damage = Utility.Dice(Dice_Amount, Dice_Sides, Dice_Offset); //divines.2.0
+                damage = Utility.Dice(Dice_Amount, Dice_Sides, Dice_Offset) * 2; //divines.2.0
+                
             }
               
             /* Apply damage level offset
@@ -3273,12 +3274,12 @@ namespace Server.Items
 
                 if (lumberValue >= 110.0)
                 {
-                    modifiers += 0.1;
+                    modifiers += 0.05;
                 }
 
                 if (lumberValue >= 120.0)
                 {
-                    modifiers += 0.1;
+                    modifiers += 0.05;
                 }
             }
 
@@ -3303,12 +3304,12 @@ namespace Server.Items
 
                 if (miningValue >= 110.0)
                 {
-                    modifiers += 0.1;
+                    modifiers += 0.05;
                 }
 
                 if (miningValue >= 120.0)
                 {
-                    modifiers += 0.1;
+                    modifiers += 0.05;
                 }
             }
 
@@ -3344,14 +3345,10 @@ namespace Server.Items
 
 		public virtual int ComputeDamage(Mobile attacker, Mobile defender)
 		{
-			if (Core.AOS)
-			{
-				return ComputeDamageAOS(attacker, defender);
-			}
 
 			int damage = (int)ScaleDamageOld(attacker, GetBaseDamage(attacker), true);
 
-            if (defender is BaseCreature && attacker is BaseCreature) //divines 2.0
+            if (defender is BaseCreature ) //divines 2.0
             {
                 
             }
@@ -3362,8 +3359,8 @@ namespace Server.Items
                 double min = bc.VirtualArmor * 0.333;
                 double max = bc.VirtualArmor * 0.666;
                 double mod = (Utility.RandomMinMax( (int)min, (int)max) );
-                attacker.SendMessage(80, "armor reduced damage of {0} by {1}",damage,mod );
-                attacker.SendMessage(70, "armor roll = {0}",mod);
+                //attacker.SendMessage(80, "armor reduced damage of {0} by {1}",damage,mod );
+               // attacker.SendMessage(70, "armor roll = {0}",mod);
                 damage -= AOS.Scale(damage, (int)mod);
             }
             // pre-AOS, halve damage if the defender is a player or the attacker is not a player
@@ -3380,7 +3377,7 @@ namespace Server.Items
                     double max =  y * .666;
                     int damagemod = damage * Utility.RandomMinMax((int)min, (int)max) / 100;
                     int newdamage = damage - damagemod;
-                    defender.SendMessage(40,"armor reduced damage of {0} by {1} for a total of {2}", damage, damagemod, newdamage );
+                   // defender.SendMessage(40,"armor reduced damage of {0} by {1} for a total of {2}", damage, damagemod, newdamage );
                     damage = newdamage; //damage -= AOS.Scale(damage, y);                   
                }
             }
@@ -4835,7 +4832,7 @@ namespace Server.Items
 			{
 				list.Add(1060636); // exceptional
 			}
-
+            
 			if (RequiredRace == Race.Elf)
 			{
 				list.Add(1075086); // Elves Only

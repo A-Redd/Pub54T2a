@@ -1588,8 +1588,14 @@ namespace Server.Mobiles
                 LevelItemManager.CheckItems(from, this);
             }
             #endregion
-//divines 2.0
-            this.PrivateOverheadMessage(MessageType.Regular, 1001, true, "-" + (amount), from.NetState);
+            //divines 2.0
+            if (this.Controlled = true && this.ControlMaster !=null)
+            {
+                Mobile cm = this.ControlMaster;
+                this.PrivateOverheadMessage(MessageType.Regular, 200, true, "-" + (amount), cm.NetState);
+            }
+            else
+            this.PrivateOverheadMessage(MessageType.Regular, 100, true, "-" + (amount), from.NetState);
         }
 
         public virtual void OnDamagedBySpell(Mobile from)

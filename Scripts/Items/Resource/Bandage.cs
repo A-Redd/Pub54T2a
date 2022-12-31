@@ -392,9 +392,9 @@ namespace Server.Items
 
 				double healing = m_Healer.Skills[primarySkill].Value;
 				double anatomy = m_Healer.Skills[secondarySkill].Value;
-				double chance = ((healing - 30.0) / 50.0) - (m_Patient.Poison.RealLevel * 0.1) - (m_Slips * 0.02);
+				double chance = ((healing - 30.0) / 50.0) - (m_Patient.Poison.RealLevel * 0.15) - (m_Slips * 0.02);
 
-				if ((checkSkills = (healing >= 60.0 && anatomy >= 60.0)) && chance > Utility.RandomDouble())
+				if ((checkSkills = (healing >= 60.0 && anatomy >= 60.0)) /*&& chance > Utility.RandomDouble()*/)
 				{
 					if (m_Patient.CurePoison(m_Healer))
 					{
@@ -451,7 +451,7 @@ namespace Server.Items
 				healing += EnhancedBandage.HealingBonus;
 				#endregion
 
-				if (chance > Utility.RandomDouble())
+				if (chance > 0)
 				{
 					healerNumber = 500969; // You finish applying the bandages.
 
@@ -464,9 +464,10 @@ namespace Server.Items
 					}
 					else
 					{
-						min = (anatomy / 5.0) + (healing / 5.0) + 3.0;
-						max = (anatomy / 5.0) + (healing / 2.0) + 10.0;
-					}
+						min = (40 * healing/100 * (1 + (.2 * anatomy/100)));
+                        max = (60 * healing/100 * (1 + (.2 * anatomy/100)));
+
+                    }
 
 					double toHeal = min + (Utility.RandomDouble() * (max - min));
 
@@ -477,11 +478,11 @@ namespace Server.Items
 
 					if (Core.AOS)
 					{
-						toHeal -= toHeal * m_Slips * 0.35; // TODO: Verify algorithm
+						toHeal -= toHeal * m_Slips * 0.3; // TODO: Verify algorithm
 					}
 					else
 					{
-						toHeal -= m_Slips * 4;
+						toHeal -= m_Slips * 3;
 					}
 
 					if (toHeal < 1)
@@ -491,8 +492,6 @@ namespace Server.Items
 					}
                     Mobile pat = m_Patient as Mobile;
                     pat.Heal((int)toHeal, m_Healer, false);
-
-                    //pat.PrivateOverheadMessage(MessageType.Regular, 95, true, "+" + (toHeal), m_Healer.NetState);
                 }
 				else
 				{
